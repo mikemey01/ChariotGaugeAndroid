@@ -14,7 +14,7 @@
             android:contentDescription="@string/max_button"
             android:onClick="buttonTwoClick"
             android:padding="5dip"
-            android:src="@drawable/title_gauge_max" />
+            android:src="@drawable/chart_pause" />
 
         <ImageButton
             android:id="@+id/btnOne"
@@ -24,7 +24,7 @@
             android:onClick="buttonOneClick"
             android:padding="5dip"
             android:paddingTop="2dp"
-            android:src="@drawable/title_gauge_reset" />
+            android:src="@drawable/chart_play" />
         
         <ImageButton
             android:id="@+id/btnDisplay"
