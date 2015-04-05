@@ -90,8 +90,8 @@
       <file leaf-file-name="PSensor.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/PSensor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41095892" vertical-offset="4515" max-vertical-offset="6165">
-              <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
+            <state vertical-scroll-proportion="4.912827" vertical-offset="2010" max-vertical-offset="6180">
+              <caret line="399" column="4" selection-start-line="399" selection-start-column="4" selection-end-line="399" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#9552#12023#0" expanded="true" />
@@ -1480,8 +1480,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/PSensor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41095892" vertical-offset="4515" max-vertical-offset="6165">
-          <caret line="325" column="26" selection-start-line="325" selection-start-column="26" selection-end-line="325" selection-end-column="26" />
+        <state vertical-scroll-proportion="4.912827" vertical-offset="2010" max-vertical-offset="6180">
+          <caret line="399" column="4" selection-start-line="399" selection-start-column="4" selection-end-line="399" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#9552#12023#0" expanded="true" />

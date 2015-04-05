@@ -397,6 +397,7 @@ public class PSensor extends Activity {
     }
 
     /*Bluetooth LE area */
+    
 
     public void setupBLE(){
         if(isBLE){
