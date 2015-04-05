@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +68,9 @@ public class PSensor extends Activity {
     Button    btnSpeed;
     Button    btnVolts;
 
+    //Bluetooth LE
+    private Boolean isBLE;
+
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothSerialService mSerialService = null;
     int intReadMsgPrevious = 0;
@@ -100,7 +103,6 @@ public class PSensor extends Activity {
             typeFaceBtn     = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams_Bold.ttf");
             typeFaceTitle   = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -121,29 +123,43 @@ public class PSensor extends Activity {
         btnSpeed.setTypeface(typeFaceBtn);
         btnVolts.setTypeface(typeFaceBtn);
 
+        //Bluetooth LE check
+        isBLE = false;
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
+            isBLE = false;
+            finish();
+        }else{
+            Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
+            isBLE = true;
+        }
+
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
         Object obj = PassObject.getObject();
         //Assign it to global mSerialService variable in this activity.
-        if(!debug){
-            mSerialService = (BluetoothSerialService)obj;
-        }
+        if(!debug && !isBLE) {
+            mSerialService = (BluetoothSerialService) obj;
 
-        if(mSerialService != null){
-            //Update the BluetoothSerialService instance's handler to this activities.
-            mSerialService.setHandler(mHandler);
-            //Update the connection status on the dashboard.
-            if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
-                btnConnect.setText("Disconnect");
-            }else{
+            if (mSerialService != null) {
+                //Update the BluetoothSerialService instance's handler to this activities.
+                mSerialService.setHandler(mHandler);
+                //Update the connection status on the dashboard.
+                if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
+                    btnConnect.setText("Disconnect");
+                } else {
+                    btnConnect.setText("Connect");
+                }
+            } else {
+                //Looks like an initial launch - Call the method that sets up bluetooth on the device.
                 btnConnect.setText("Connect");
+                if (!debug) {
+                    setupBT();
+                }
             }
         }else{
-            //Looks like an initial launch - Call the method that sets up bluetooth on the device.
-            btnConnect.setText("Connect");
-            if(!debug){
-                setupBT();
-            }
+            //BLE initial tasks go here including call to setupBLE
+            //TODO: setup call to BLE
         }
     }
     
@@ -302,7 +318,9 @@ public class PSensor extends Activity {
         try {
             PackageInfo pi          = getPackageManager().getPackageInfo(getPackageName(), 0);
             currentVersionNumber    = pi.versionCode;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            //do something
+        }
 
         if (currentVersionNumber > savedVersionNumber) {
             showWhatsNewDialog();
@@ -375,6 +393,14 @@ public class PSensor extends Activity {
             break;
         default: 
             break;
+        }
+    }
+
+    /*Bluetooth LE area */
+
+    public void setupBLE(){
+        if(isBLE){
+            //do something
         }
     }
 }

@@ -5,5 +5,5 @@ package com.chariotinstruments.chariotgauge;
  */
 public class BluetoothLowEnergy {
     public static final boolean D = false;
-    
+
 }
