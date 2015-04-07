@@ -50,19 +50,54 @@
       <file leaf-file-name="BoostActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BoostActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2325" max-vertical-offset="4200">
-              <caret line="155" column="6" selection-start-line="155" selection-start-column="6" selection-end-line="155" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="3885">
+              <caret line="109" column="46" selection-start-line="109" selection-start-column="38" selection-end-line="109" selection-end-column="46" />
+              <folding>
+                <element signature="e#5232#5982#0" expanded="true" />
+                <element signature="e#5975#5976#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BluetoothLowEnergy.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.16811955" vertical-offset="0" max-vertical-offset="803">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BluetoothLowEnergy.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java">
+      <file leaf-file-name="LineGraphBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/LineGraphBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="225">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1305">
+              <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1334#1335#0" expanded="true" />
+                <element signature="e#1390#1391#0" expanded="true" />
+                <element signature="e#1434#1435#0" expanded="true" />
+                <element signature="e#1482#1483#0" expanded="true" />
+                <element signature="e#1526#1527#0" expanded="true" />
+                <element signature="e#1574#1575#0" expanded="true" />
+                <element signature="e#1618#1619#0" expanded="true" />
+                <element signature="e#1666#1667#0" expanded="true" />
+                <element signature="e#1710#1711#0" expanded="true" />
+                <element signature="e#1758#1759#0" expanded="true" />
+                <element signature="e#1806#1807#0" expanded="true" />
+                <element signature="e#1855#1856#0" expanded="true" />
+                <element signature="e#1924#1925#0" expanded="true" />
+                <element signature="e#1971#1972#0" expanded="true" />
+                <element signature="e#2024#2025#0" expanded="true" />
+                <element signature="e#2067#2068#0" expanded="true" />
+                <element signature="e#2286#2287#0" expanded="true" />
+                <element signature="e#2322#2323#0" expanded="true" />
+                <element signature="e#2383#2384#0" expanded="true" />
+                <element signature="e#2420#2421#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,9 +105,16 @@
       <file leaf-file-name="BluetoothSerialService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothSerialService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="6345">
-              <caret line="42" column="43" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5242" max-vertical-offset="6330">
+              <caret line="387" column="11" selection-start-line="387" selection-start-column="11" selection-end-line="387" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#14347#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2687#2688#0" expanded="true" />
+                <element signature="e#2723#2724#0" expanded="true" />
+                <element signature="e#3273#3274#0" expanded="true" />
+                <element signature="e#3302#3303#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PSensor.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PSensor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/PSensor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.912827" vertical-offset="2010" max-vertical-offset="6180">
-              <caret line="399" column="4" selection-start-line="399" selection-start-column="4" selection-end-line="399" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5377" max-vertical-offset="6180">
+              <caret line="162" column="9" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#9552#12023#0" expanded="true" />
@@ -863,10 +905,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/gauge_layout_2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/gauge_layout_2_landscape.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/gauge_layout_4.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/PSensor.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothSerialService.java" />
       </list>
     </option>
   </component>
@@ -1226,7 +1269,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4200">
           <caret line="155" column="6" selection-start-line="155" selection-start-column="6" selection-end-line="155" selection-end-column="6" />
-          <folding />
+          <folding>
+            <element signature="e#5232#5982#0" expanded="true" />
+            <element signature="e#5975#5976#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1242,7 +1288,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="6345">
           <caret line="42" column="43" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
-          <folding />
+          <folding>
+            <element signature="e#0#14347#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2687#2688#0" expanded="true" />
+            <element signature="e#2723#2724#0" expanded="true" />
+            <element signature="e#3273#3274#0" expanded="true" />
+            <element signature="e#3302#3303#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1272,7 +1325,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2085" max-vertical-offset="3930">
           <caret line="155" column="6" selection-start-line="155" selection-start-column="6" selection-end-line="155" selection-end-column="6" />
-          <folding />
+          <folding>
+            <element signature="e#5232#5982#0" expanded="true" />
+            <element signature="e#5975#5976#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1295,7 +1351,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="4200">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="e#5232#5982#0" expanded="true" />
+            <element signature="e#5975#5976#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1329,7 +1388,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="4200">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="e#5232#5982#0" expanded="true" />
+            <element signature="e#5975#5976#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1406,42 +1468,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BoostActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="3840">
-          <caret line="155" column="6" selection-start-line="155" selection-start-column="6" selection-end-line="155" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothSerialService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5880">
-          <caret line="42" column="43" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="516">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
-          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -1480,8 +1510,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/PSensor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.912827" vertical-offset="2010" max-vertical-offset="6180">
-          <caret line="399" column="4" selection-start-line="399" selection-start-column="4" selection-end-line="399" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5377" max-vertical-offset="6180">
+          <caret line="162" column="9" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#9552#12023#0" expanded="true" />
@@ -1489,6 +1519,78 @@
             <element signature="e#13087#13275#0" expanded="true" />
             <element signature="e#13264#13265#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/LineGraphBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1305">
+          <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1334#1335#0" expanded="true" />
+            <element signature="e#1390#1391#0" expanded="true" />
+            <element signature="e#1434#1435#0" expanded="true" />
+            <element signature="e#1482#1483#0" expanded="true" />
+            <element signature="e#1526#1527#0" expanded="true" />
+            <element signature="e#1574#1575#0" expanded="true" />
+            <element signature="e#1618#1619#0" expanded="true" />
+            <element signature="e#1666#1667#0" expanded="true" />
+            <element signature="e#1710#1711#0" expanded="true" />
+            <element signature="e#1758#1759#0" expanded="true" />
+            <element signature="e#1806#1807#0" expanded="true" />
+            <element signature="e#1855#1856#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1971#1972#0" expanded="true" />
+            <element signature="e#2024#2025#0" expanded="true" />
+            <element signature="e#2067#2068#0" expanded="true" />
+            <element signature="e#2286#2287#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
+            <element signature="e#2383#2384#0" expanded="true" />
+            <element signature="e#2420#2421#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BoostActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="3885">
+          <caret line="109" column="46" selection-start-line="109" selection-start-column="38" selection-end-line="109" selection-end-column="46" />
+          <folding>
+            <element signature="e#5232#5982#0" expanded="true" />
+            <element signature="e#5975#5976#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothSerialService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5242" max-vertical-offset="6330">
+          <caret line="387" column="11" selection-start-line="387" selection-start-column="11" selection-end-line="387" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#14347#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2687#2688#0" expanded="true" />
+            <element signature="e#2723#2724#0" expanded="true" />
+            <element signature="e#3273#3274#0" expanded="true" />
+            <element signature="e#3302#3303#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chariotinstruments/chariotgauge/BluetoothLowEnergy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16811955" vertical-offset="0" max-vertical-offset="803">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

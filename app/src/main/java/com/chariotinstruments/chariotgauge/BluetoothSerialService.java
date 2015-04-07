@@ -382,7 +382,6 @@ public class BluetoothSerialService {
                         }
                     }
                 }
-
             }
         }
 
