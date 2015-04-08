@@ -1,5 +1,7 @@
 package com.chariotinstruments.chariotgauge;
 
-public class SpeedActivity {
+import android.app.Activity;
+
+public class SpeedActivity extends Activity {
 
 }

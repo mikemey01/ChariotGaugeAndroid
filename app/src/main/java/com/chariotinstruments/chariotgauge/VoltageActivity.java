@@ -1,5 +1,7 @@
 package com.chariotinstruments.chariotgauge;
 
-public class VoltageActivity {
+import android.app.Activity;
+
+public class VoltageActivity extends Activity {
 
 }
