@@ -29,6 +29,7 @@ proguard/
 # Windows thumbnail db
 Thumbs.db
 
-# Miscellaneous
+# .idea folder
 /.idea/workspace.xml
+/.idea/misc.xml
 /.idea/libraries/
