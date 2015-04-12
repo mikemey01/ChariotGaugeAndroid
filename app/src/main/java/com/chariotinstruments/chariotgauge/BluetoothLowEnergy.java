@@ -8,11 +8,13 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 
 /**
  * Created by Mike on 4/5/15.
  */
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class BluetoothLowEnergy {
     private static final boolean D = false;
     BluetoothManager btManager;
@@ -40,14 +42,7 @@ public class BluetoothLowEnergy {
     }
 
 
-    //BLE vars
-    private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
-        @Override
-        public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-            // your implementation here
-        }
-    };
-
+    //member functions
     private void startScan(){
         _btAdapter.startLeScan(leScanCallback);
     }
@@ -56,8 +51,18 @@ public class BluetoothLowEnergy {
         _btAdapter.stopLeScan(leScanCallback);
     }
 
-    //annotated for 4.3+ devices only to suppress version error.
-    @TargetApi(18)
+    private void connectController(BluetoothDevice bluetoothDevice, Context context){
+        BluetoothGatt bluetoothGatt = bluetoothDevice.connectGatt(context, false, btleGattCallback);
+    }
+
+    //BLE callbacks
+    private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
+        @Override
+        public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+            // your implementation here
+        }
+    };
+
     private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
 
         @Override
