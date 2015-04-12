@@ -1,6 +1,12 @@
 package com.chariotinstruments.chariotgauge;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.os.Handler;
 
@@ -9,12 +15,14 @@ import android.os.Handler;
  */
 public class BluetoothLowEnergy {
     private static final boolean D = false;
+    BluetoothManager btManager;
 
 
     //Constructor
     public BluetoothLowEnergy(Context context, Handler handler){
         _btAdapter = BluetoothAdapter.getDefaultAdapter();
         _handler = handler;
+        btManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
     }
 
     //Member fields
@@ -30,6 +38,45 @@ public class BluetoothLowEnergy {
     public int getState(){
         return _currentState;
     }
+
+
+    //BLE vars
+    private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
+        @Override
+        public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+            // your implementation here
+        }
+    };
+
+    private void startScan(){
+        _btAdapter.startLeScan(leScanCallback);
+    }
+
+    private void stopScan(){
+        _btAdapter.stopLeScan(leScanCallback);
+    }
+
+    //annotated for 4.3+ devices only to suppress version error.
+    @TargetApi(18)
+    private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
+            // this will get called anytime you perform a read or write characteristic operation
+        }
+
+        @Override
+        public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+            // this will get called when a device connects or disconnects
+        }
+
+        @Override
+        public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
+            // this will get called after the client initiates a            BluetoothGatt.discoverServices() call
+        }
+    };
+
+
 
 
 }
