@@ -22,7 +22,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.prefs);
         getPreferenceManager()
         .findPreference("go_to_site")
-        .setOnPreferenceClickListener( 
+        .setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -30,6 +30,16 @@ public class SettingsActivity extends PreferenceActivity {
                         startActivity(intent);
                         return true;
                     }
-                }); 
-    } 
+                });
+
+        getPreferenceManager()
+                .findPreference("blue_tooth_trace_selection")
+                .setOnPreferenceClickListener(
+                        new OnPreferenceClickListener() {
+                            public boolean onPreferenceClick(Preference preference) {
+                                startActivity(new Intent(getApplicationContext(), BlueToothTrace.class));
+                                return true;
+                            }
+                        });
+    }
 }
