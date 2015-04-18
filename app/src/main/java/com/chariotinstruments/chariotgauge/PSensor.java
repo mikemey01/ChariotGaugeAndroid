@@ -73,6 +73,7 @@ public class PSensor extends Activity {
 
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothSerialService mSerialService = null;
+    private BluetoothLowEnergy mSerialServiceBLE = null;
     int intReadMsgPrevious = 0;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,8 @@ public class PSensor extends Activity {
             finish();
         }else{
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
-            isBLE = true;
+            //TODO: set this to true before final build!
+            isBLE = false;
         }
 
 

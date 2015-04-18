@@ -23,6 +23,7 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class BluetoothLowEnergy {
     private static final boolean D = false;
+    private static final int BYTE_LENGTH = 1024;
     BluetoothManager btManager;
 
 
@@ -110,7 +111,7 @@ public class BluetoothLowEnergy {
 
         private void processData(byte[] data){
             String newData;
-            newData = new String(data, 0, 1024);
+            newData = new String(data, 0, BYTE_LENGTH);
             Log.d("BLE", newData);
         }
     };
