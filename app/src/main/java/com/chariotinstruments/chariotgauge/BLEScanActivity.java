@@ -44,6 +44,7 @@ public class BLEScanActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setTitle(R.string.title_devices);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         mHandler = new Handler();
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
