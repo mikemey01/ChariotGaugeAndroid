@@ -9,7 +9,6 @@
 .DS_Store
 .idea/.DS_Store
 gradle/.DS_store
-src/
 
 # Java class files
 *.class
