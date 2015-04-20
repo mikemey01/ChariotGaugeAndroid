@@ -1,5 +1,6 @@
 package com.chariotinstruments.chariotgauge;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
@@ -8,6 +9,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
  * Created by Mike on 4/19/15.
  * Taken from AOSP's sample Bluetooth scan activity.
  */
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class BLEScanActivity extends ListActivity {
 
     private LeDeviceListAdapter mLeDeviceListAdapter;
@@ -134,14 +137,15 @@ public class BLEScanActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final BluetoothDevice device = mLeDeviceListAdapter.getDevice(position);
         if (device == null) return;
-        final Intent intent = new Intent(this, DeviceControlActivity.class);
-        intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-        intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+        //TODO: Need to do something on-click here.
+        //final Intent intent = new Intent(this, DeviceControlActivity.class);
+        //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+        //intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         if (mScanning) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     private void scanLeDevice(final boolean enable) {

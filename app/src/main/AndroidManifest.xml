@@ -5,7 +5,7 @@
     android:versionName="1.6.1" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="11"
         android:targetSdkVersion="21" />
 
     <supports-screens
@@ -101,8 +101,7 @@
         <activity
             android:name=".BLEScanActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.D1"/>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
