@@ -239,7 +239,7 @@ public class PSensor extends Activity {
     public void connectDevice(){
         if (getConnectionState() == BluetoothSerialService.STATE_NONE) {
             //TODO: use this to call BLE or classicR
-            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            Intent serverIntent = new Intent(this, BLEScanActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }else if(getConnectionState() == BluetoothSerialService.STATE_CONNECTED){
             if(mSerialService != null){

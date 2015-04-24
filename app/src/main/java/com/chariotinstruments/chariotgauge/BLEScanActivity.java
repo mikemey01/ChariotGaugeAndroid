@@ -257,4 +257,9 @@ public class BLEScanActivity extends ListActivity {
         TextView deviceAddress;
     }
 
+
+    /* connecting and discovering services/characteristics */
+
+
+
 }
