@@ -20,6 +20,7 @@ package com.chariotinstruments.chariotgauge;
  * Created by user on 4/23/15.
  */
 
+import android.annotation.TargetApi;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -33,12 +34,14 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
 
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class BluetoothLeService extends Service {
     private final static String TAG = BluetoothLeService.class.getSimpleName();
 
@@ -64,7 +67,7 @@ public class BluetoothLeService extends Service {
             "com.example.bluetooth.le.EXTRA_DATA";
 
     //TODO: changes this to the HMSoft UUID
-    public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
+    public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
     public final static UUID UUID_CHARIOT_GAUGE = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
     public final static UUID UUID_CHARACTERISTIC_CHARIOT_GAUGE = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
@@ -299,7 +302,7 @@ public class BluetoothLeService extends Service {
 
         // This is specific to Heart Rate Measurement.
         if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             mBluetoothGatt.writeDescriptor(descriptor);
         }
