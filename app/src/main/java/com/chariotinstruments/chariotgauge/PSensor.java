@@ -33,6 +33,7 @@ public class PSensor extends Activity {
     // Debugging
     private static final String TAG = "ProjectSensor";
     private static final boolean D  = true;
+    private static final boolean ENABLE_BLE = false;
 
     // Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
