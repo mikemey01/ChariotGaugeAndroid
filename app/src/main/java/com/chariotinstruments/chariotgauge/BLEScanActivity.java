@@ -376,6 +376,7 @@ public class BLEScanActivity extends ListActivity {
 
     public void connectDevice(){
         Log.d(TAG, "Connecting device..");
+        //Connect device, BroadcastReceiver call back calls connectService().
         mBluetoothLeService.connect(mDeviceAddress);
     }
 
@@ -388,7 +389,8 @@ public class BLEScanActivity extends ListActivity {
         for(BluetoothGattService gattService : gattServices){
             tempUUID = gattService.getUuid();
             if(tempUUID.compareTo(mBluetoothLeService.UUID_CHARIOT_GAUGE)==0){
-                gattService.getCharacteristic(mBluetoothLeService.UUID_CHARACTERISTIC_CHARIOT_GAUGE);
+                //connect to characteristice, assuming this exists for now.
+                connectCharacteristic(gattService.getCharacteristic(mBluetoothLeService.UUID_CHARACTERISTIC_CHARIOT_GAUGE));
             }
         }
         Log.d(TAG, "Could not find service - connectService()");
