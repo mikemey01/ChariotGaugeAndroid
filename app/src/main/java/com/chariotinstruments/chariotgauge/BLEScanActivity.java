@@ -198,7 +198,6 @@ public class BLEScanActivity extends ListActivity {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             mScanning = false;
         }
-        //startActivity(intent);
         setupControl(device.getName(), device.getAddress());
     }
 
@@ -360,6 +359,7 @@ public class BLEScanActivity extends ListActivity {
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 //TODO: this is where the data gets pushed to the handler
                 //displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                //tempViewHolder.deviceName.setText(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
         }
     };
@@ -377,7 +377,11 @@ public class BLEScanActivity extends ListActivity {
     public void connectDevice(){
         Log.d(TAG, "Connecting device..");
         //Connect device, BroadcastReceiver call back calls connectService().
-        mBluetoothLeService.connect(mDeviceAddress);
+        if(mBluetoothLeService != null) {
+            mBluetoothLeService.connect(mDeviceAddress);
+        }else{
+            Log.d(TAG, "mBluetoothLeService is null");
+        }
     }
 
     public void connectService(){
