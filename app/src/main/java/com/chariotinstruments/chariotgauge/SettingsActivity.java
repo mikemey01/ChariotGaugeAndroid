@@ -14,12 +14,20 @@ import android.view.View;
 
 public class SettingsActivity extends PreferenceActivity {
 
-    View root; 
+    View root;
+    PreferenceScreen CGPreferenceScreen;
+    Preference TraceBlueToothPreference;
+
+    private final boolean ENABLE_TRACE_BLUE_TOOTH = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
+
+        CGPreferenceScreen = getPreferenceScreen();
+
+        // Setup the click listener for the "Buy Hardware Controller" preference
         getPreferenceManager()
         .findPreference("go_to_site")
         .setOnPreferenceClickListener(
@@ -32,14 +40,23 @@ public class SettingsActivity extends PreferenceActivity {
                     }
                 });
 
-        getPreferenceManager()
-                .findPreference("blue_tooth_trace_selection")
-                .setOnPreferenceClickListener(
-                        new OnPreferenceClickListener() {
-                            public boolean onPreferenceClick(Preference preference) {
-                                startActivity(new Intent(getApplicationContext(), BlueToothTrace.class));
-                                return true;
-                            }
-                        });
+        // Blue tooth trace preference. Setup the listener if ENABLE_TRACE_BLUE_TOOTH, else remove
+        // it from the preference screen.
+        TraceBlueToothPreference = getPreferenceManager().
+                findPreference("blue_tooth_trace_selection");
+
+        if ( ENABLE_TRACE_BLUE_TOOTH ){
+            TraceBlueToothPreference
+                    .setOnPreferenceClickListener(
+                            new OnPreferenceClickListener() {
+                                public boolean onPreferenceClick(Preference preference) {
+                                    startActivity(new Intent(getApplicationContext(), BlueToothTrace.class));
+                                    return true;
+                                }
+                            });
+        }
+        else {
+            CGPreferenceScreen.removePreference(TraceBlueToothPreference);
+        }
     }
 }
