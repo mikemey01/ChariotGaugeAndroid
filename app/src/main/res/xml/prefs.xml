@@ -26,6 +26,11 @@
             android:key="showNightMode"
             android:summary="Toggle night mode"
             android:title="Night Mode" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="isBluetoothClassic"
+            android:summary="Use Classic Bluetooth Scan?"
+            android:title="Toggle Bluetooth Classic"/>
 
         <ListPreference
             android:defaultValue="Tenths"

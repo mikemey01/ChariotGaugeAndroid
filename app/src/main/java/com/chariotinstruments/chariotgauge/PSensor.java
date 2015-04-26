@@ -74,6 +74,7 @@ public class PSensor extends Activity {
 
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothSerialService mSerialService = null;
+    private BluetoothLowEnergy mSerialServiceBLE = null;
     int intReadMsgPrevious = 0;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -130,16 +131,10 @@ public class PSensor extends Activity {
             Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
             finish();
-        }else {
-            if (ENABLE_BLE) {
-                Toast.makeText(this, "BLE Supported and enabled!", Toast.LENGTH_SHORT).show();
-                isBLE = true;
-            }
-            else{
-                Toast.makeText(this, "BLE Supported, but disabled.", Toast.LENGTH_SHORT).show();
-                isBLE = false;
-            }
-
+        }else{
+            Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
+            //TODO: set this to true before final build!
+            isBLE = false;
         }
 
 
@@ -244,7 +239,8 @@ public class PSensor extends Activity {
 
     public void connectDevice(){
         if (getConnectionState() == BluetoothSerialService.STATE_NONE) {
-            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+            //TODO: use this to call BLE or classic
+            Intent serverIntent = new Intent(this, BLEScanActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }else if(getConnectionState() == BluetoothSerialService.STATE_CONNECTED){
             if(mSerialService != null){
@@ -255,7 +251,7 @@ public class PSensor extends Activity {
 //            if(mSerialService != null){
 //                mSerialService.stop(); 
 //            }
-//            //mSerialService.start(); //--potential error, leaving for now.
+//            //mSerialService.start(); //-- potential error, leaving for now.
         }
     }
 

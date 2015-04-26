@@ -5,6 +5,11 @@
 # Files for the Dalvik VM
 *.dex
 
+#mac crap
+.DS_Store
+.idea/.DS_Store
+gradle/.DS_store
+
 # Java class files
 *.class
 
