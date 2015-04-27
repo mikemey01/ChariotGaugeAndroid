@@ -18,7 +18,7 @@ public class SettingsActivity extends PreferenceActivity {
     PreferenceScreen CGPreferenceScreen;
     Preference TraceBlueToothPreference;
 
-    private final boolean ENABLE_TRACE_BLUE_TOOTH = true;
+    private final boolean ENABLE_TRACE_BLUE_TOOTH = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
