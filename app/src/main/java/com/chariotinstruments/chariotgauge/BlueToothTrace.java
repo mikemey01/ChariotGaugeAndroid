@@ -49,9 +49,6 @@ public class BlueToothTrace extends Activity{
             s = "Line:" + String.valueOf(x) + "\n";
             traceOut.append(s);
         }
-//
-//        traceOut.setText(s);
-
     }
 
     //Button one handling.

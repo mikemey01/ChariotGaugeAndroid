@@ -14,18 +14,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="false" />
-
-    <android:uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
     <application
         android:finishOnTaskLaunch="true"
@@ -108,12 +97,12 @@
             android:name=".VoltageActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.D1"/>            
+            android:theme="@style/Theme.D1" />
         <activity
             android:name=".BlueToothTrace"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_blue_tooth_trace"
-            android:theme="@style/Theme.D1"/>
+            android:theme="@style/Theme.D1" />
         <activity
             android:name=".BLEScanActivity"
             android:noHistory="true"
