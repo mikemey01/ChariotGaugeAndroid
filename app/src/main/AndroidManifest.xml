@@ -87,22 +87,22 @@
             android:name=".RPMActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.D1" />
+            android:theme="@style/Theme.D1"/>
         <activity
             android:name=".SpeedActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.D1" />
+            android:theme="@style/Theme.D1"/>
         <activity
             android:name=".VoltageActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.D1" />
+            android:theme="@style/Theme.D1"/>
         <activity
             android:name=".BlueToothTrace"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_blue_tooth_trace"
-            android:theme="@style/Theme.D1" />
+            android:theme="@style/Theme.D1"/>
         <activity
             android:name=".BLEScanActivity"
             android:noHistory="true"
