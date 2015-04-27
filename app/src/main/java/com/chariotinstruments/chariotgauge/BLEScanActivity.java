@@ -361,6 +361,7 @@ public class BLEScanActivity extends ListActivity {
                 //TODO: this is where the data gets pushed to the handler
                 //displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
                 //tempViewHolder.deviceName.setText(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                Log.d(TAG, intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
         }
     };
