@@ -124,4 +124,7 @@
    		Oct-5-2012: \n
    		   - Initial release</string>
 
+    <string name="title_activity_blue_tooth_trace">BlueToothTrace</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

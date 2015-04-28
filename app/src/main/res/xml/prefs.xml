@@ -289,6 +289,10 @@
             android:title="Select Gauge Two" />
     </PreferenceScreen>
     <PreferenceScreen
+        android:key="blue_tooth_trace_selection"
+        android:title="Trace BlueTooth" >
+    </PreferenceScreen>
+    <PreferenceScreen
         android:key="go_to_site"
         android:title="Buy Hardware Controller" >
     </PreferenceScreen>
