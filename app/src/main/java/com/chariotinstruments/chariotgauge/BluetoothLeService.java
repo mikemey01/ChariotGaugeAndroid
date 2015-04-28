@@ -37,6 +37,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.os.Handler;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +51,7 @@ public class BluetoothLeService extends Service {
     private String mBluetoothDeviceAddress;
     private BluetoothGatt mBluetoothGatt;
     private int mConnectionState = STATE_DISCONNECTED;
+    private Handler _handler;
 
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
@@ -108,6 +110,10 @@ public class BluetoothLeService extends Service {
         }
     };
 
+    private void setHand(Handler inHandler){
+        _handler = inHandler;
+    }
+
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         sendBroadcast(intent);
@@ -121,7 +127,7 @@ public class BluetoothLeService extends Service {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
             for(byte byteChar : data)
                 stringBuilder.append(String.format("%02X ", byteChar));
-            intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
+            intent.putExtra(EXTRA_DATA, new String(data));// + "\n" + stringBuilder.toString());
         }
         sendBroadcast(intent);
     }

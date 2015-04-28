@@ -72,6 +72,7 @@ public class PSensor extends Activity {
     private Boolean isBLE;
 
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private BluetoothLeService _bluetoothLEService = null;
     private BluetoothSerialService mSerialService = null;
     private BluetoothLowEnergy mSerialServiceBLE = null;
     int intReadMsgPrevious = 0;
@@ -125,47 +126,101 @@ public class PSensor extends Activity {
         btnVolts.setTypeface(typeFaceBtn);
 
         //Bluetooth LE check
-        isBLE = false;
+        isBLE = true;
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
             finish();
         }else{
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
-            //TODO: set this to true before final build!
-            isBLE = false;
+            isBLE = true;
         }
 
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
         Object obj = PassObject.getObject();
-        //Assign it to global mSerialService variable in this activity.
-        if(!debug && !isBLE) {
-            mSerialService = (BluetoothSerialService) obj;
 
-            if (mSerialService != null) {
-                //Update the BluetoothSerialService instance's handler to this activities.
-                mSerialService.setHandler(mHandler);
-                //Update the connection status on the dashboard.
-                if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
-                    btnConnect.setText("Disconnect");
+        //Assign it to global mSerialService variable in this activity.
+        if(!debug) {
+            if (!isBLE) {
+                mSerialService = (BluetoothSerialService) obj;
+
+                if (mSerialService != null) {
+                    //Update the BluetoothSerialService instance's handler to this activities.
+                    mSerialService.setHandler(mHandler);
+                    //Update the connection status on the dashboard.
+                    if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
+                        btnConnect.setText("Disconnect");
+                    } else {
+                        btnConnect.setText("Connect");
+                    }
                 } else {
+                    //Looks like an initial launch - Call the method that sets up bluetooth on the device.
                     btnConnect.setText("Connect");
-                }
-            } else {
-                //Looks like an initial launch - Call the method that sets up bluetooth on the device.
-                btnConnect.setText("Connect");
-                if (!debug) {
-                    setupBT();
+                    if (!debug) {
+                        setupBT();
+                    }
                 }
             }
         }else{
-            //BLE initial tasks go here including call to setupBLE
-            //TODO: setup call to BLE
+            //Bluetooth LE branch for oncreate
+            _bluetoothLEService = (BluetoothLeService) obj;
+
         }
     }
-    
 
+
+    public void onClickActivity (View v){
+        int id = v.getId();
+        switch (id){
+            case R.id.connectBtn:
+                connectDevice();
+                break;
+            case R.id.settingsBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                break;
+            case R.id.widebandBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), WidebandActivity.class));
+                //startActivity(new Intent(getApplicationContext(), SingleChartActivity.class));
+                break;
+            case R.id.customBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), TemperatureActivity.class));
+                break;
+            case R.id.boostBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), BoostActivity.class));
+                break;
+            case R.id.rpmBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), RPMActivity.class));
+                break;
+            case R.id.oilBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), OilActivity.class));
+                break;
+            case R.id.speedBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), SpeedActivity.class));
+                break;
+            case R.id.voltBtn:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), VoltageActivity.class));
+                break;
+            case R.id.multiBtn1:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), TwoGaugeActivity.class));
+                break;
+            case R.id.multiBtn2:
+                PassObject.setObject(mSerialService);
+                startActivity(new Intent(getApplicationContext(), FourGaugeActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
 
     public void onDestroy() {
         super.onDestroy();
@@ -184,6 +239,8 @@ public class PSensor extends Activity {
         }
     }
 
+
+    //TODO: classic bluetooth connection stuff
 
     public int getConnectionState() {
         return mSerialService.getState();
@@ -347,65 +404,10 @@ public class PSensor extends Activity {
         builder.create().show();
     }
 
-    public void onClickActivity (View v){
-        int id = v.getId();
-        switch (id){
-        case R.id.connectBtn:
-            connectDevice();
-            break;
-        case R.id.settingsBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-            break;
-        case R.id.widebandBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), WidebandActivity.class));
-            //startActivity(new Intent(getApplicationContext(), SingleChartActivity.class));
-            break;
-        case R.id.customBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), TemperatureActivity.class));
-            break;
-        case R.id.boostBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), BoostActivity.class));
-            break;
-        case R.id.rpmBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), RPMActivity.class));
-            break;
-        case R.id.oilBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), OilActivity.class));
-            break;
-        case R.id.speedBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), SpeedActivity.class));
-            break;
-        case R.id.voltBtn:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), VoltageActivity.class));
-            break;
-        case R.id.multiBtn1:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), TwoGaugeActivity.class));
-            break;
-        case R.id.multiBtn2:
-            PassObject.setObject(mSerialService);
-            startActivity(new Intent(getApplicationContext(), FourGaugeActivity.class));
-            break;
-        default: 
-            break;
-        }
-    }
+
 
     /*Bluetooth LE area */
 
 
-    public void setupBLE(){
-        if(isBLE){
-            //do something
-        }
-    }
 }
 
