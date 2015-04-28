@@ -48,7 +48,7 @@ public class PSensor extends Activity {
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST       = "toast";
-    
+
     //DEBUG
     private boolean debug;
 
@@ -100,14 +100,14 @@ public class PSensor extends Activity {
         btnRPM          = (Button)   findViewById(R.id.rpmBtn);
         btnSpeed        = (Button)   findViewById(R.id.speedBtn);
         btnVolts        = (Button)   findViewById(R.id.voltBtn);
-        
+
         try {
             typeFaceBtn     = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams_Bold.ttf");
             typeFaceTitle   = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         //Initialize debug
         debug = false;
 
@@ -135,6 +135,8 @@ public class PSensor extends Activity {
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
             isBLE = true;
         }
+
+        isBLE = false;
 
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
@@ -229,13 +231,17 @@ public class PSensor extends Activity {
             Log.d(TAG, "onDestroy()");
             mSerialService.stop();
         }
-        
+
     }
 
     public void onResume(){
         super.onResume();
         if(!debug){
-            mSerialService.setHandler(mHandler);
+            if(!isBLE) {
+                mSerialService.setHandler(mHandler);
+            }else{
+                _bluetoothLEService.setHandler(mHandler);
+            }
         }
     }
 
@@ -247,7 +253,7 @@ public class PSensor extends Activity {
     }
 
     public void setupBT(){
-
+        Log.d(TAG, "made it to setupBT");
         //Get the bluetooth device adapter, if there is not one, toast.
         if (mBluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), "This device does not support Bluetooth", Toast.LENGTH_SHORT).show();
@@ -266,7 +272,7 @@ public class PSensor extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
 
-        case REQUEST_CONNECT_DEVICE: 
+        case REQUEST_CONNECT_DEVICE:
 
             // When DeviceListActivity returns with a device to connect
             if (resultCode == Activity.RESULT_OK) {
@@ -276,7 +282,7 @@ public class PSensor extends Activity {
                 BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
                 // Attempt to connect to the device
                 //txtView.setText(txtView.getText()+ "\n\n" + device.getName() + "\n" +device.getAddress());
-                mSerialService.connect(device);                
+                mSerialService.connect(device);
             }
             break;
 
@@ -284,7 +290,7 @@ public class PSensor extends Activity {
             // When the request to enable Bluetooth returns
             if (resultCode == Activity.RESULT_OK) {
                 //If OK (device contains bluetooth connectivity, user did not click "no"):
-                Toast.makeText(getApplicationContext(), "Enabled Bluetooth OK", Toast.LENGTH_SHORT).show();              
+                Toast.makeText(getApplicationContext(), "Enabled Bluetooth OK", Toast.LENGTH_SHORT).show();
             }else{
                 //If NOT OK, say so.
                 Toast.makeText(getApplicationContext(), "Bluetooth NOT enabled or not Present", Toast.LENGTH_SHORT).show();
@@ -296,7 +302,7 @@ public class PSensor extends Activity {
     public void connectDevice(){
         if (getConnectionState() == BluetoothSerialService.STATE_NONE) {
             //TODO: use this to call BLE or classic
-            Intent serverIntent = new Intent(this, BLEScanActivity.class);
+            Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }else if(getConnectionState() == BluetoothSerialService.STATE_CONNECTED){
             if(mSerialService != null){
@@ -305,7 +311,7 @@ public class PSensor extends Activity {
             //mSerialService.start(); //--potential error, leaving for now.
 //        }else if(getConnectionState() == BluetoothSerialService.STATE_CONNECTING){
 //            if(mSerialService != null){
-//                mSerialService.stop(); 
+//                mSerialService.stop();
 //            }
 //            //mSerialService.start(); //-- potential error, leaving for now.
         }
@@ -343,7 +349,7 @@ public class PSensor extends Activity {
                 break;
             case MESSAGE_READ:
                 int intReadMessage = 0;
-                
+
                 byte[] readBuf = (byte[]) msg.obj;
                 // construct a string from the valid bytes in the buffer
                 String readMessage = new String(readBuf, 0, msg.arg1);
@@ -352,7 +358,7 @@ public class PSensor extends Activity {
                     intReadMessage = Integer.parseInt(readMessage);
                     intReadMsgPrevious = intReadMessage;
                 } catch (NumberFormatException e) {
-                    intReadMessage = intReadMsgPrevious;	
+                    intReadMessage = intReadMsgPrevious;
                 }
 
                 break;

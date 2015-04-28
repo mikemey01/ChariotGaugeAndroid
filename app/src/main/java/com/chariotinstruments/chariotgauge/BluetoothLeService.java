@@ -110,7 +110,7 @@ public class BluetoothLeService extends Service {
         }
     };
 
-    private void setHand(Handler inHandler){
+    public void setHandler(Handler inHandler){
         _handler = inHandler;
     }
 
