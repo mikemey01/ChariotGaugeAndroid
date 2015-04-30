@@ -136,7 +136,7 @@ public class PSensor extends Activity {
             isBLE = true;
         }
 
-        isBLE = false;
+        //isBLE = false;
 
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
@@ -168,6 +168,17 @@ public class PSensor extends Activity {
             //Bluetooth LE branch for oncreate
             _bluetoothLEService = (BluetoothLeService) obj;
 
+            if(_bluetoothLEService != null){
+                _bluetoothLEService.setHandler(mHandler);
+                if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
+                    btnConnect.setText("Disconnect");
+                }else{
+                    btnConnect.setText("Connect");
+                }
+            }else{ //_bluetoothLeService is null
+                btnConnect.setText("Connect");
+            }
+
         }
     }
 
@@ -177,9 +188,9 @@ public class PSensor extends Activity {
         switch (id){
             case R.id.connectBtn:
                 if(!isBLE) {
-                    connectDevice();
+                    connectDevice(); //classic
                 }else{
-                    //todo: call to connectBLE();
+                    connectBLE(); //BLE
                 }
                 break;
             case R.id.settingsBtn:
@@ -235,6 +246,11 @@ public class PSensor extends Activity {
             Log.d(TAG, "onDestroy()");
             mSerialService.stop();
         }
+        if(_bluetoothLEService != null){
+            _bluetoothLEService.disconnect();
+            _bluetoothLEService.close();
+        }
+
 
     }
 
@@ -433,5 +449,7 @@ public class PSensor extends Activity {
     private int getBLEConnectionState(){
         return _bluetoothLEService.getmConnectionState();
     }
+
+    //TODO: Need to add Handler here.
 }
 
