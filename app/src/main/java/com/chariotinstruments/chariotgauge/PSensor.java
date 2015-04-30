@@ -419,6 +419,19 @@ public class PSensor extends Activity {
     /* Bluetooth LE area */
 
 
-    
+    private void connectBLE(){
+        if (getBLEConnectionState() == BluetoothLeService.STATE_DISCONNECTED) {
+            Intent serverIntent = new Intent(this, BLEScanActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+        }else if(getConnectionState() == BluetoothLeService.STATE_CONNECTED){
+            if(_bluetoothLEService != null){
+                _bluetoothLEService.disconnect();
+            }
+        }
+    }
+
+    private int getBLEConnectionState(){
+        return _bluetoothLEService.getmConnectionState();
+    }
 }
 
