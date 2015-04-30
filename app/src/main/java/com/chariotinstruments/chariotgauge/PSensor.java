@@ -176,7 +176,11 @@ public class PSensor extends Activity {
         int id = v.getId();
         switch (id){
             case R.id.connectBtn:
-                connectDevice();
+                if(!isBLE) {
+                    connectDevice();
+                }else{
+                    //todo: call to connectBLE();
+                }
                 break;
             case R.id.settingsBtn:
                 PassObject.setObject(mSerialService);
@@ -245,8 +249,44 @@ public class PSensor extends Activity {
         }
     }
 
+    /*show what's new dialog*/
 
-    //TODO: classic bluetooth connection stuff
+    private void showWhatsNew() {
+        SharedPreferences sharedPref    = getSharedPreferences(PRIVATE_PREF, this.MODE_PRIVATE);
+        int currentVersionNumber        = 0;
+        int savedVersionNumber          = sharedPref.getInt(VERSION_KEY, 0);
+
+        try {
+            PackageInfo pi          = getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersionNumber    = pi.versionCode;
+        } catch (Exception e) {
+            //do something
+        }
+
+        if (currentVersionNumber > savedVersionNumber) {
+            showWhatsNewDialog();
+            Editor editor   = sharedPref.edit();
+            editor.putInt(VERSION_KEY, currentVersionNumber);
+            editor.commit();
+        }
+    }
+
+    private void showWhatsNewDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
+        Builder builder         = new AlertDialog.Builder(this);
+        builder.setView(view).setTitle("Whats New").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+
+
+    /* classic bluetooth area */
 
     public int getConnectionState() {
         return mSerialService.getState();
@@ -301,7 +341,6 @@ public class PSensor extends Activity {
 
     public void connectDevice(){
         if (getConnectionState() == BluetoothSerialService.STATE_NONE) {
-            //TODO: use this to call BLE or classic
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }else if(getConnectionState() == BluetoothSerialService.STATE_CONNECTED){
@@ -376,44 +415,10 @@ public class PSensor extends Activity {
         }
     };
 
-    private void showWhatsNew() {
-        SharedPreferences sharedPref    = getSharedPreferences(PRIVATE_PREF, this.MODE_PRIVATE);
-        int currentVersionNumber        = 0;
-        int savedVersionNumber          = sharedPref.getInt(VERSION_KEY, 0);
 
-        try {
-            PackageInfo pi          = getPackageManager().getPackageInfo(getPackageName(), 0);
-            currentVersionNumber    = pi.versionCode;
-        } catch (Exception e) {
-            //do something
-        }
-
-        if (currentVersionNumber > savedVersionNumber) {
-            showWhatsNewDialog();
-            Editor editor   = sharedPref.edit();
-            editor.putInt(VERSION_KEY, currentVersionNumber);
-            editor.commit();
-        }
-    }
-
-    private void showWhatsNewDialog() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view               = inflater.inflate(R.layout.dialog_whatsnew, null);
-        Builder builder         = new AlertDialog.Builder(this);
-        builder.setView(view).setTitle("Whats New").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.create().show();
-    }
+    /* Bluetooth LE area */
 
 
-
-    /*Bluetooth LE area */
-
-
+    
 }
 
