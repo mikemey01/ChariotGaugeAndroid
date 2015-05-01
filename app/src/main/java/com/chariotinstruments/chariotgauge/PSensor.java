@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,12 +132,12 @@ public class PSensor extends Activity {
             Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
             finish();
-        }else{
+        }else{ //Bluetooth is supprted, check if it's turned on in settings.
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
-            isBLE = true;
-        }
 
-        //isBLE = false;
+            SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+            isBLE = sp.getBoolean("isBluetoothClassic", true);
+        }
 
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
