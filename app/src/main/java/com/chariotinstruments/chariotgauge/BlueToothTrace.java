@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;        // meyere, this should not be needed in the end
 
 public class BlueToothTrace extends Activity implements Runnable{
 
@@ -36,7 +37,12 @@ public class BlueToothTrace extends Activity implements Runnable{
         //Assign it to global mSerialService variable in this activity.
         mSerialService = (BluetoothSerialService) obj;
 
-        lineCount       = 0;
+        //Check if the serial service object is null - assign the handler.
+        if(mSerialService != null){
+            //Update the BluetoothSerialService instance's handler to this activities.
+            mSerialService.setHandler(mHandler);
+        }
+
         paused          = false;
         btnOne          = (ImageButton) findViewById(R.id.btnOne);
         btnTwo          = (ImageButton) findViewById(R.id.btnTwo);
@@ -46,6 +52,7 @@ public class BlueToothTrace extends Activity implements Runnable{
 
         thread = new Thread(BlueToothTrace.this);
         thread.start();
+        traceOut.append("on create\n");
     }
 
     //Handles the data being sent back from the BluetoothSerialService class.
@@ -64,6 +71,7 @@ public class BlueToothTrace extends Activity implements Runnable{
 
                 Message workerMsg = workerHandler.obtainMessage(1, readMessage);
                 workerMsg.sendToTarget();
+//                paused = true; // meyere, for just one iteration
             }
         }
     };
@@ -81,7 +89,9 @@ public class BlueToothTrace extends Activity implements Runnable{
     }
 
     private void testTextOut(String sValue){
-        traceOut.append(sValue);
+        traceOut.append(sValue);        // 4/30/15 this only works for one iteration
+//        traceOut.append("hi there!\n");
+// /       Toast.makeText(this, sValue, Toast.LENGTH_LONG).show();
     }
 
     //Button one handling.
