@@ -136,7 +136,7 @@ public class PSensor extends Activity {
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
 
             SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
-            isBLE = sp.getBoolean("isBluetoothClassic", true);
+            isBLE = !sp.getBoolean("isBluetoothClassic", false);
         }
 
 
