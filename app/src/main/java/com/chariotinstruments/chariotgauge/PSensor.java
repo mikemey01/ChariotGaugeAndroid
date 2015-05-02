@@ -89,22 +89,22 @@ public class PSensor extends Activity {
         showWhatsNew();
 
         //Get the instances of the layout objects.
-        titleText       = (TextView) findViewById(R.id.title_text);
-        btnConnect      = (Button)   findViewById(R.id.connectBtn);
-        btnSettings     = (Button)   findViewById(R.id.settingsBtn);
-        btnWideband     = (Button)   findViewById(R.id.widebandBtn);
-        btnBoost        = (Button)   findViewById(R.id.boostBtn);
-        btnOil          = (Button)   findViewById(R.id.oilBtn);
-        btnCustom       = (Button)   findViewById(R.id.customBtn);
-        btnMulti1       = (Button)   findViewById(R.id.multiBtn1);
-        btnMulti2       = (Button)   findViewById(R.id.multiBtn2);
-        btnRPM          = (Button)   findViewById(R.id.rpmBtn);
-        btnSpeed        = (Button)   findViewById(R.id.speedBtn);
-        btnVolts        = (Button)   findViewById(R.id.voltBtn);
+        titleText = (TextView) findViewById(R.id.title_text);
+        btnConnect = (Button) findViewById(R.id.connectBtn);
+        btnSettings = (Button) findViewById(R.id.settingsBtn);
+        btnWideband = (Button) findViewById(R.id.widebandBtn);
+        btnBoost = (Button) findViewById(R.id.boostBtn);
+        btnOil = (Button) findViewById(R.id.oilBtn);
+        btnCustom = (Button) findViewById(R.id.customBtn);
+        btnMulti1 = (Button) findViewById(R.id.multiBtn1);
+        btnMulti2 = (Button) findViewById(R.id.multiBtn2);
+        btnRPM = (Button) findViewById(R.id.rpmBtn);
+        btnSpeed = (Button) findViewById(R.id.speedBtn);
+        btnVolts = (Button) findViewById(R.id.voltBtn);
 
         try {
-            typeFaceBtn     = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams_Bold.ttf");
-            typeFaceTitle   = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+            typeFaceBtn = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams_Bold.ttf");
+            typeFaceTitle = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,10 +132,10 @@ public class PSensor extends Activity {
             Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
             finish();
-        }else{ //Bluetooth is supprted, check if it's turned on in settings.
+        } else { //Bluetooth is supprted, check if it's turned on in settings.
             Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
 
-            SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             isBLE = !sp.getBoolean("isBluetoothClassic", false);
         }
 
@@ -144,7 +144,7 @@ public class PSensor extends Activity {
         Object obj = PassObject.getObject();
 
         //Assign it to global mSerialService variable in this activity.
-        if(!debug) {
+        if (!debug) {
             if (!isBLE) {
                 mSerialService = (BluetoothSerialService) obj;
 
@@ -164,22 +164,21 @@ public class PSensor extends Activity {
                         setupBT();
                     }
                 }
-            }
-        }else{
-            //Bluetooth LE branch for oncreate
-            _bluetoothLEService = (BluetoothLeService) obj;
+            } else {
+                //Bluetooth LE branch for oncreate
+                _bluetoothLEService = (BluetoothLeService) obj;
 
-            if(_bluetoothLEService != null){
-                _bluetoothLEService.setHandler(mHandler);
-                if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
-                    btnConnect.setText("Disconnect");
-                }else{
+                if (_bluetoothLEService != null) {
+                    _bluetoothLEService.setHandler(mHandler);
+                    if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
+                        btnConnect.setText("Disconnect");
+                    } else {
+                        btnConnect.setText("Connect");
+                    }
+                } else { //_bluetoothLeService is null
                     btnConnect.setText("Connect");
                 }
-            }else{ //_bluetoothLeService is null
-                btnConnect.setText("Connect");
             }
-
         }
     }
 
@@ -257,11 +256,19 @@ public class PSensor extends Activity {
 
     public void onResume(){
         super.onResume();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        isBLE = !sp.getBoolean("isBluetoothClassic", false);
         if(!debug){
             if(!isBLE) {
-                mSerialService.setHandler(mHandler);
+                if(mSerialService != null) {
+                    mSerialService.setHandler(mHandler);
+                }else{
+                    setupBT();
+                }
             }else{
-                _bluetoothLEService.setHandler(mHandler);
+                if(_bluetoothLEService != null) {
+                    //_bluetoothLEService.setHandler(mHandler);
+                }
             }
         }
     }
@@ -448,7 +455,10 @@ public class PSensor extends Activity {
     }
 
     private int getBLEConnectionState(){
-        return _bluetoothLEService.getmConnectionState();
+        if(_bluetoothLEService != null) {
+            return _bluetoothLEService.getmConnectionState();
+        }
+        return 0;
     }
 
     //TODO: Need to add Handler here.
