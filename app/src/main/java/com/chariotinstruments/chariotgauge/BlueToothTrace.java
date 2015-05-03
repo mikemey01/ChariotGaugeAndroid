@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;        // meyere, this should not be needed in the end
 
 public class BlueToothTrace extends Activity implements Runnable{
 
@@ -52,7 +51,6 @@ public class BlueToothTrace extends Activity implements Runnable{
 
         thread = new Thread(BlueToothTrace.this);
         thread.start();
-        traceOut.append("on create\n");
     }
 
     //Handles the data being sent back from the BluetoothSerialService class.
@@ -79,19 +77,23 @@ public class BlueToothTrace extends Activity implements Runnable{
     @Override
     public void run(){
         Looper.prepare();
-        workerHandler = new Handler(){
+        workerHandler = new Handler() {
             @Override
-            public void handleMessage(Message msg){
-                testTextOut((String)msg.obj);
+            public void handleMessage(Message msg) {
+                textOut((String) msg.obj);
             }
         };
         Looper.loop();
     }
 
-    private void testTextOut(String sValue){
-        traceOut.append(sValue);        // 4/30/15 this only works for one iteration
-//        traceOut.append("hi there!\n");
-// /       Toast.makeText(this, sValue, Toast.LENGTH_LONG).show();
+    public void textOut(String msg) {
+        final String str = msg;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                traceOut.append(str + "\n");
+            }
+        });
     }
 
     //Button one handling.
