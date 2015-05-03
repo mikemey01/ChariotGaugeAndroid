@@ -3,6 +3,9 @@ package com.chariotinstruments.chariotgauge;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
@@ -10,14 +13,16 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class BlueToothTrace extends Activity{
+public class BlueToothTrace extends Activity implements Runnable{
 
     ImageButton             btnOne;
     ImageButton             btnTwo;
     TextView                traceOut;
     int                     lineCount;
     boolean                 paused;
+    Thread                  thread;
     BluetoothSerialService  mSerialService;
+    private static Handler workerHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,12 @@ public class BlueToothTrace extends Activity{
         //Assign it to global mSerialService variable in this activity.
         mSerialService = (BluetoothSerialService) obj;
 
-        lineCount       = 0;
+        //Check if the serial service object is null - assign the handler.
+        if(mSerialService != null){
+            //Update the BluetoothSerialService instance's handler to this activities.
+            mSerialService.setHandler(mHandler);
+        }
+
         paused          = false;
         btnOne          = (ImageButton) findViewById(R.id.btnOne);
         btnTwo          = (ImageButton) findViewById(R.id.btnTwo);
@@ -39,16 +49,51 @@ public class BlueToothTrace extends Activity{
 
         traceOut.setMovementMethod(new ScrollingMovementMethod());
 
-        testTextOut();
+        thread = new Thread(BlueToothTrace.this);
+        thread.start();
     }
 
-    private void testTextOut(){
-        String s = "";
+    //Handles the data being sent back from the BluetoothSerialService class.
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if(!paused){
+                byte[] readBuf = (byte[]) msg.obj;
+                // construct a string from the valid bytes in the buffer
+                String readMessage;
+                try {
+                    readMessage = new String(readBuf, 0, msg.arg1);
+                } catch (NullPointerException e) {
+                    readMessage = "0";
+                }
 
-        for(int x = 0; x < 100; x++){
-            s = "Line:" + String.valueOf(x) + "\n";
-            traceOut.append(s);
+                Message workerMsg = workerHandler.obtainMessage(1, readMessage);
+                workerMsg.sendToTarget();
+//                paused = true; // meyere, for just one iteration
+            }
         }
+    };
+
+    @Override
+    public void run(){
+        Looper.prepare();
+        workerHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                textOut((String) msg.obj);
+            }
+        };
+        Looper.loop();
+    }
+
+    public void textOut(String msg) {
+        final String str = msg;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                traceOut.append(str + "\n");
+            }
+        });
     }
 
     //Button one handling.
@@ -56,14 +101,6 @@ public class BlueToothTrace extends Activity{
         //Reset the max value.
         paused = false;
         btnTwo.setBackgroundResource(Color.TRANSPARENT);
-
-//        traceOut.append("hi there\nnew line\n and another new line");
-        for(int ii=0; ii<10; ii++) {
-            traceOut.append("hi there ");
-            traceOut.append(Integer.toString(lineCount));
-            traceOut.append("\n");
-            lineCount += 1;
-        }
     }
 
     //Button two handling.
