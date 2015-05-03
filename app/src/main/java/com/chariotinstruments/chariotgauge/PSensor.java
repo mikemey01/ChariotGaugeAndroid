@@ -42,6 +42,13 @@ public class PSensor extends Activity {
     public static final int MESSAGE_DEVICE_NAME  = 4;
     public static final int MESSAGE_TOAST        = 5;
 
+    public static final int BLE_MESSAGE_STATE_CHANGE = 3;
+    public static final int BLE_MESSAGE_DISCONNECTED = 0;
+    public static final int BLE_MESSAGE_CONNECTING   = 1;
+    public static final int BLE_MESSAGE_CONNECTED    = 2;
+
+
+
     //Used to show whats new dialog.
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY  = "version_number";
@@ -169,7 +176,7 @@ public class PSensor extends Activity {
                 _bluetoothLEService = (BluetoothLeService) obj;
 
                 if (_bluetoothLEService != null) {
-                    _bluetoothLEService.setHandler(mHandler);
+                    _bluetoothLEService.setHandler(_BLEHandler);
                     if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
                         btnConnect.setText("Disconnect");
                     } else {
@@ -441,6 +448,30 @@ public class PSensor extends Activity {
 
 
     /* Bluetooth LE area */
+
+    // The Handler that gets information back from the BluetoothLeService
+    private final Handler _BLEHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BLE_MESSAGE_STATE_CHANGE:
+                    if (D) Log.i(TAG, "MESSAGE_STATE_CHANGE1: " + msg.arg1);
+                    switch (msg.arg1) {
+                        case BLE_MESSAGE_DISCONNECTED:
+                            btnConnect.setText("Connect");
+                            break;
+                        case BLE_MESSAGE_CONNECTING:
+                            btnConnect.setText("Connecting..");
+                            break;
+                        case BLE_MESSAGE_CONNECTED:
+                            btnConnect.setClickable(true);
+                            btnConnect.setText("Connected! \n Tap to Disconnect");
+                            break;
+
+                    }
+            }
+        }
+    };
 
 
     private void connectBLE(){

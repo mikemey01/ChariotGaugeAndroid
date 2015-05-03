@@ -194,7 +194,7 @@ public class BLEScanActivity extends ListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        goHome();
+        //goHome();
         //unbindService(mServiceConnection);
         //mBluetoothLeService = null;
     }
@@ -429,10 +429,11 @@ public class BLEScanActivity extends ListActivity {
 
     public void goHome(){
         PassObject.setObject(mBluetoothLeService);
-        onBackPressed();
+        //onBackPressed();
     }
 
     public void onBackPressed(){
+        goHome();
         super.onBackPressed();
     }
 

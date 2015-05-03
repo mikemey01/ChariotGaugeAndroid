@@ -30,7 +30,7 @@
             android:defaultValue="false"
             android:key="isBluetoothClassic"
             android:summary="Use Classic Bluetooth Scan?"
-            android:title="Toggle Bluetooth Classic"/>
+            android:title="Use Bluetooth Classic"/>
 
         <ListPreference
             android:defaultValue="Tenths"
