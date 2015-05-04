@@ -214,7 +214,13 @@ public class PSensor extends Activity {
                 startActivity(new Intent(getApplicationContext(), TemperatureActivity.class));
                 break;
             case R.id.boostBtn:
-                PassObject.setObject(mSerialService);
+                if(!isBLE) {
+                    PassObject.setObject(mSerialService);
+                    PassObject.setType(1);
+                }else{
+                    PassObject.setObject(_bluetoothLEService);
+                    PassObject.setType(2);
+                }
                 startActivity(new Intent(getApplicationContext(), BoostActivity.class));
                 break;
             case R.id.rpmBtn:
@@ -480,6 +486,7 @@ public class PSensor extends Activity {
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }else if(getConnectionState() == BluetoothLeService.STATE_CONNECTED){
             if(_bluetoothLEService != null){
+                Log.d(TAG, "disconnecting BLE...");
                 _bluetoothLEService.disconnect();
             }
         }
@@ -491,7 +498,5 @@ public class PSensor extends Activity {
         }
         return 0;
     }
-
-    //TODO: Need to add Handler here.
 }
 

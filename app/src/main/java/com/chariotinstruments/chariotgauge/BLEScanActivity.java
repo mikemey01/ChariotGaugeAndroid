@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -88,6 +89,24 @@ public class BLEScanActivity extends ListActivity {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             mBluetoothLeService = null;
+        }
+    };
+
+    //temp handler
+    //Handles the data being sent back from the BluetoothLeService class.
+    private final Handler _bleHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            byte[] readBuf = (byte[]) msg.obj;
+            // construct a string from the valid bytes in the buffer
+            String readMessage;
+            try {
+                readMessage = new String(readBuf, 0, msg.arg1);
+            } catch (NullPointerException e) {
+                readMessage = "0";
+            }
+            //Redraw the needle to the correct value.
+            Log.d("CHECKINGAGAIN", readMessage);
         }
     };
 
@@ -194,9 +213,6 @@ public class BLEScanActivity extends ListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //goHome();
-        //unbindService(mServiceConnection);
-        //mBluetoothLeService = null;
     }
 
     @Override
@@ -362,7 +378,7 @@ public class BLEScanActivity extends ListActivity {
                 //TODO: this is where the data gets pushed to the handler
                 //displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
                 //tempViewHolder.deviceName.setText(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-                Log.d(TAG, intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                //Log.d("THISWORKS", intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
         }
     };
@@ -415,6 +431,7 @@ public class BLEScanActivity extends ListActivity {
         if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
             mNotifyCharacteristic = characteristic;
             mBluetoothLeService.setCharacteristicNotification(characteristic, true);
+            mBluetoothLeService.setHandler(_bleHandler);
         }
     }
 
@@ -428,7 +445,9 @@ public class BLEScanActivity extends ListActivity {
     }
 
     public void goHome(){
+        unbindService(mServiceConnection);
         PassObject.setObject(mBluetoothLeService);
+        PassObject.setType(2);
         //onBackPressed();
     }
 

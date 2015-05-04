@@ -121,6 +121,7 @@ public class BluetoothLeService extends Service {
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
+        byte[] buffer = new byte[1024];
         // For all other profiles, writes the data formatted in HEX.
         final byte[] data = characteristic.getValue();
         if (data != null && data.length > 0) {
@@ -129,6 +130,7 @@ public class BluetoothLeService extends Service {
                 stringBuilder.append(String.format("%02X ", byteChar));
             intent.putExtra(EXTRA_DATA, new String(data));// + "\n" + stringBuilder.toString());
         }
+        _handler.obtainMessage(PSensor.MESSAGE_READ, data.length, -1, data).sendToTarget();
         sendBroadcast(intent);
     }
 
