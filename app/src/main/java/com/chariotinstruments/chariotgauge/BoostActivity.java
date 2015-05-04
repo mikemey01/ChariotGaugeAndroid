@@ -127,7 +127,7 @@ public class BoostActivity extends Activity implements Runnable {
         Object obj = PassObject.getObject();
         int _bluetoothType = PassObject.getType();
 
-        isBLE = true;
+        isBLE = false;
         if(_bluetoothType == CLASSIC_TYPE){
             isBLE = false;
         }else if(_bluetoothType == BLE_TYPE){
@@ -139,6 +139,7 @@ public class BoostActivity extends Activity implements Runnable {
             mSerialService = (BluetoothSerialService) obj;
         }else{
             _bluetoothLeService = (BluetoothLeService) obj;
+
         }
         
         //Check if the serial service object is null - assign the handler.
@@ -148,7 +149,10 @@ public class BoostActivity extends Activity implements Runnable {
         }
 
         if(_bluetoothLeService != null && isBLE){
+            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
             _bluetoothLeService.setHandler(mHandler);
+            Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
         }
 
         thread = new Thread(BoostActivity.this);

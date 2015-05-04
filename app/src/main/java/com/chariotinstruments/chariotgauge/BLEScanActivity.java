@@ -413,7 +413,7 @@ public class BLEScanActivity extends ListActivity {
                 connectCharacteristic(gattService.getCharacteristic(mBluetoothLeService.UUID_CHARACTERISTIC_CHARIOT_GAUGE));
             }
         }
-        Log.d(TAG, "Could not find service - connectService()");
+        //Log.d(TAG, "Could not find service - connectService()");
     }
 
     public void connectCharacteristic(BluetoothGattCharacteristic characteristic){
@@ -432,6 +432,7 @@ public class BLEScanActivity extends ListActivity {
             mNotifyCharacteristic = characteristic;
             mBluetoothLeService.setCharacteristicNotification(characteristic, true);
             mBluetoothLeService.setHandler(_bleHandler);
+            onBackPressed();
         }
     }
 
@@ -449,6 +450,7 @@ public class BLEScanActivity extends ListActivity {
         PassObject.setObject(mBluetoothLeService);
         PassObject.setType(2);
         //onBackPressed();
+        finish();
     }
 
     public void onBackPressed(){

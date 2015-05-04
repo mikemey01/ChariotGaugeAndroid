@@ -150,6 +150,8 @@ public class PSensor extends Activity {
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
         Object obj = PassObject.getObject();
 
+        Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
+
         //Assign it to global mSerialService variable in this activity.
         if (!debug) {
             if (!isBLE) {
@@ -172,6 +174,7 @@ public class PSensor extends Activity {
                     }
                 }
             } else {
+
                 //Bluetooth LE branch for oncreate
                 _bluetoothLEService = (BluetoothLeService) obj;
 
@@ -217,6 +220,7 @@ public class PSensor extends Activity {
                 if(!isBLE) {
                     PassObject.setObject(mSerialService);
                     PassObject.setType(1);
+
                 }else{
                     PassObject.setObject(_bluetoothLEService);
                     PassObject.setType(2);
