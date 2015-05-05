@@ -75,12 +75,10 @@ public class BoostActivity extends Activity implements Runnable {
 
     //Used for BLE Service life-cycle
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
         }
-
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             _bluetoothLeService = null;
@@ -150,7 +148,9 @@ public class BoostActivity extends Activity implements Runnable {
 
         if(_bluetoothLeService != null && isBLE){
             Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+            startService(gattServiceIntent);
             bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
             _bluetoothLeService.setHandler(mHandler);
             Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
         }
@@ -192,6 +192,8 @@ public class BoostActivity extends Activity implements Runnable {
                 }
                 //Redraw the needle to the correct value.
                 currentMsg = readMessage;
+
+                //Log.d("Boost HERE", readMessage);
 
                 Message workerMsg = workerHandler.obtainMessage(1, currentMsg);
                 workerMsg.sendToTarget();

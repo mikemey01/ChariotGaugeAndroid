@@ -285,6 +285,22 @@ public class PSensor extends Activity {
             }else{
                 if(_bluetoothLEService != null) {
                     //_bluetoothLEService.setHandler(mHandler);
+                }else{ // try to get the BLE service from the BLEScanActivity
+                    Object obj = PassObject.getObject();
+                    if(obj instanceof BluetoothLeService) {
+                        _bluetoothLEService = (BluetoothLeService) obj;
+                    }
+
+                    if (_bluetoothLEService != null) {
+                        _bluetoothLEService.setHandler(_BLEHandler);
+                        if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
+                            btnConnect.setText("Disconnect");
+                        } else {
+                            btnConnect.setText("Connect");
+                        }
+                    } else { //_bluetoothLeService is null
+                        btnConnect.setText("Connect");
+                    }
                 }
             }
         }
@@ -488,10 +504,11 @@ public class PSensor extends Activity {
         if (getBLEConnectionState() == BluetoothLeService.STATE_DISCONNECTED) {
             Intent serverIntent = new Intent(this, BLEScanActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-        }else if(getConnectionState() == BluetoothLeService.STATE_CONNECTED){
+        }else if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
             if(_bluetoothLEService != null){
                 Log.d(TAG, "disconnecting BLE...");
                 _bluetoothLEService.disconnect();
+                btnConnect.setText("Connect");
             }
         }
     }

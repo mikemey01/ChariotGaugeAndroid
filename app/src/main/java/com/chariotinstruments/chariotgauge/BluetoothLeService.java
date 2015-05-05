@@ -100,7 +100,7 @@ public class BluetoothLeService extends Service {
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+                //broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
             }
         }
 
@@ -120,18 +120,20 @@ public class BluetoothLeService extends Service {
     }
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-        final Intent intent = new Intent(action);
-        byte[] buffer = new byte[1024];
-        // For all other profiles, writes the data formatted in HEX.
-        final byte[] data = characteristic.getValue();
-        if (data != null && data.length > 0) {
-            final StringBuilder stringBuilder = new StringBuilder(data.length);
-            for(byte byteChar : data)
-                stringBuilder.append(String.format("%02X ", byteChar));
-            intent.putExtra(EXTRA_DATA, new String(data));// + "\n" + stringBuilder.toString());
+        if(action == ACTION_DATA_AVAILABLE && characteristic.getUuid().compareTo(UUID_CHARACTERISTIC_CHARIOT_GAUGE)==0) {
+            final Intent intent = new Intent(action);
+            byte[] buffer = new byte[1024];
+            // For all other profiles, writes the data formatted in HEX.
+            final byte[] data = characteristic.getValue();
+            if (data != null && data.length > 0) {
+                final StringBuilder stringBuilder = new StringBuilder(data.length);
+                for (byte byteChar : data)
+                    stringBuilder.append(String.format("%02X ", byteChar));
+                intent.putExtra(EXTRA_DATA, new String(data));// + "\n" + stringBuilder.toString());
+            }
+            _handler.obtainMessage(PSensor.MESSAGE_READ, data.length, -1, data).sendToTarget();
+            sendBroadcast(intent);
         }
-        _handler.obtainMessage(PSensor.MESSAGE_READ, data.length, -1, data).sendToTarget();
-        sendBroadcast(intent);
     }
 
     public class LocalBinder extends Binder {
@@ -150,7 +152,7 @@ public class BluetoothLeService extends Service {
         // After using a given device, you should make sure that BluetoothGatt.close() is called
         // such that resources are cleaned up properly.  In this particular example, close() is
         // invoked when the UI is disconnected from the Service.
-        close();
+        //close();
         return super.onUnbind(intent);
     }
 
