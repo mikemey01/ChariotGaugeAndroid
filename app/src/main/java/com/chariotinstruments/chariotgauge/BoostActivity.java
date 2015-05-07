@@ -43,8 +43,6 @@ public class BoostActivity extends Activity implements Runnable {
     Thread       thread;
     boolean      isBLE;
 
-    String totalSValue;
-
 
     //Prefs vars
     View     root;
@@ -217,11 +215,10 @@ public class BoostActivity extends Activity implements Runnable {
     }
 
     public void updateGauges() {
-        if(!paused && currentSValue > 10){
+        if(!paused){
             analogGauge.setValue(multiGauge.getCurrentGaugeValue());
             txtViewDigital.setText(Float.toString(Math.abs(multiGauge.getCurrentGaugeValue())));
-            //txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
-            txtViewVolts.setText(totalSValue);
+            txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
         }
     }
 
@@ -232,9 +229,6 @@ public class BoostActivity extends Activity implements Runnable {
 
     private void parseInput(String sValue){
         String[] tokens=sValue.split(","); //split the input into an array.
-
-        //todo
-        totalSValue = sValue;
 
         try {
             currentSValue = Float.valueOf(tokens[CURRENT_TOKEN].toString());//Get current token for this gauge activity, cast as float.
