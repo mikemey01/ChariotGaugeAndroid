@@ -373,7 +373,6 @@ public class BluetoothSerialService {
                         byte b = packetBytes[i];
                         if(b == delimiter){
                             byte[] encodedBytes = new byte[readBufferPosition];
-                            System.arraycopy(buffer, 0, encodedBytes, 0, encodedBytes.length);
                             readBufferPosition = 0;
                             mHandler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, buffer).sendToTarget();
 

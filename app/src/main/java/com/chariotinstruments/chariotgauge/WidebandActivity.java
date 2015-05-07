@@ -2,13 +2,16 @@ package com.chariotinstruments.chariotgauge;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -38,6 +41,7 @@ public class WidebandActivity extends Activity implements Runnable {
     float        currentSValue;
     float        voltSValue;
     boolean      paused;
+    boolean      isBLE;
 
     //Prefs vars
     View    root;
@@ -59,8 +63,25 @@ public class WidebandActivity extends Activity implements Runnable {
     private static final int CURRENT_TOKEN = 2;
     private static final int VOLT_TOKEN    = 0;
 
+    //Bluetooth types
+    private static final int CLASSIC_TYPE = 1;
+    private static final int BLE_TYPE     = 2;
+
     BluetoothSerialService mSerialService;
+    BluetoothLeService _bluetoothLeService;
     private static Handler workerHandler;
+
+    //Used for BLE Service life-cycle
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            _bluetoothLeService = null;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,15 +113,37 @@ public class WidebandActivity extends Activity implements Runnable {
         multiGaugeVolts.buildGauge(VOLT_TOKEN);
         txtViewDigital.setText(Float.toString(multiGauge.getMinValue()));
 
-        //Get the mSerialService object from the UI activity.
+        //Get the mSerialService/BLE service object from the UI activity.
         Object obj = PassObject.getObject();
+        int _bluetoothType = PassObject.getType();
+
+        isBLE = false;
+        if(_bluetoothType == CLASSIC_TYPE){
+            isBLE = false;
+        }else if(_bluetoothType == BLE_TYPE){
+            isBLE = true;
+        }
+
         //Assign it to global mSerialService variable in this activity.
-        mSerialService = (BluetoothSerialService) obj;
+        if(!isBLE) {
+            mSerialService = (BluetoothSerialService) obj;
+        }else{
+            _bluetoothLeService = (BluetoothLeService) obj;
+        }
         
         //Check if the serial service object is null - assign the handler.
         if(mSerialService != null){
             //Update the BluetoothSerialService instance's handler to this activities.
             mSerialService.setHandler(mHandler);
+        }
+
+        if(_bluetoothLeService != null && isBLE){
+            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+            startService(gattServiceIntent);
+            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+            _bluetoothLeService.setHandler(mHandler);
+            Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
         }
 
         Thread thread = new Thread(WidebandActivity.this);
@@ -190,7 +233,13 @@ public class WidebandActivity extends Activity implements Runnable {
 
     //Activity transfer handling
     public void goHome(View v){
-        PassObject.setObject(mSerialService);
+        if(!isBLE) {
+            PassObject.setObject(mSerialService);
+            PassObject.setType(1);
+        }else{
+            PassObject.setObject(_bluetoothLeService);
+            PassObject.setType(2);
+        }
         onBackPressed();
         finish();
     }

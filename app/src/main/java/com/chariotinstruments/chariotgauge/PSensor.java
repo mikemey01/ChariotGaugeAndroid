@@ -82,7 +82,6 @@ public class PSensor extends Activity {
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothLeService _bluetoothLEService = null;
     private BluetoothSerialService mSerialService = null;
-    private BluetoothLowEnergy mSerialServiceBLE = null;
     int intReadMsgPrevious = 0;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -150,8 +149,6 @@ public class PSensor extends Activity {
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
         Object obj = PassObject.getObject();
 
-        Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
-
         //Assign it to global mSerialService variable in this activity.
         if (!debug) {
             if (!isBLE) {
@@ -208,7 +205,7 @@ public class PSensor extends Activity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.widebandBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), WidebandActivity.class));
                 //startActivity(new Intent(getApplicationContext(), SingleChartActivity.class));
                 break;
@@ -217,14 +214,7 @@ public class PSensor extends Activity {
                 startActivity(new Intent(getApplicationContext(), TemperatureActivity.class));
                 break;
             case R.id.boostBtn:
-                if(!isBLE) {
-                    PassObject.setObject(mSerialService);
-                    PassObject.setType(1);
-
-                }else{
-                    PassObject.setObject(_bluetoothLEService);
-                    PassObject.setType(2);
-                }
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), BoostActivity.class));
                 break;
             case R.id.rpmBtn:
@@ -253,6 +243,17 @@ public class PSensor extends Activity {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void passBluetooth(){
+        if(!isBLE) {
+            PassObject.setObject(mSerialService);
+            PassObject.setType(1);
+
+        }else{
+            PassObject.setObject(_bluetoothLEService);
+            PassObject.setType(2);
         }
     }
 

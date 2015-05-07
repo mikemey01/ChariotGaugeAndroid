@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
@@ -432,7 +433,8 @@ public class BLEScanActivity extends ListActivity {
             mNotifyCharacteristic = characteristic;
             mBluetoothLeService.setCharacteristicNotification(characteristic, true);
             mBluetoothLeService.setHandler(_bleHandler);
-            onBackPressed();
+
+            //onBackPressed();
         }
     }
 

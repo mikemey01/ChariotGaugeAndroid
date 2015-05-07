@@ -38,7 +38,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.os.Handler;
+import android.widget.Toast;
 
+import java.io.Console;
 import java.util.List;
 import java.util.UUID;
 
@@ -122,16 +124,27 @@ public class BluetoothLeService extends Service {
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
         if(action == ACTION_DATA_AVAILABLE && characteristic.getUuid().compareTo(UUID_CHARACTERISTIC_CHARIOT_GAUGE)==0) {
             final Intent intent = new Intent(action);
+            final byte delimiter = 13; //new line character
             byte[] buffer = new byte[1024];
+            int readBufferPosition = 0;
+
             // For all other profiles, writes the data formatted in HEX.
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 0) {
-                final StringBuilder stringBuilder = new StringBuilder(data.length);
-                for (byte byteChar : data)
-                    stringBuilder.append(String.format("%02X ", byteChar));
+                for(int i=0;i<data.length;i++){ //remove the CRLF
+                    byte b = data[i];
+                    if(b == delimiter){
+                        byte[] encodedBytes = new byte[readBufferPosition];
+                        readBufferPosition = 0;
+                        _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, data).sendToTarget();
+                    }else{
+                        buffer[readBufferPosition++] = b;
+                    }
+                }
                 intent.putExtra(EXTRA_DATA, new String(data));// + "\n" + stringBuilder.toString());
+                //_handler.obtainMessage(PSensor.MESSAGE_READ, retData.length, -1, retData).sendToTarget();
             }
-            _handler.obtainMessage(PSensor.MESSAGE_READ, data.length, -1, data).sendToTarget();
+
             sendBroadcast(intent);
         }
     }
@@ -276,6 +289,13 @@ public class BluetoothLeService extends Service {
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+
+        if (UUID_CHARIOT_GAUGE.compareTo(characteristic.getUuid())==0) {
+            //Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(characteristic.getUuid());
+            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            mBluetoothGatt.writeDescriptor(descriptor);
+        }
     }
 
     /**
