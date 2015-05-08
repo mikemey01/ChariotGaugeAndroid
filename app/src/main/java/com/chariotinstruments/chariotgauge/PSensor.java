@@ -135,12 +135,10 @@ public class PSensor extends Activity {
         //Bluetooth LE check
         isBLE = true;
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "BLE Not Supported", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bluetooth LE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
             finish();
         } else { //Bluetooth is supprted, check if it's turned on in settings.
-            Toast.makeText(this, "BLE Supported!", Toast.LENGTH_SHORT).show();
-
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             isBLE = !sp.getBoolean("isBluetoothClassic", false);
         }
@@ -284,8 +282,12 @@ public class PSensor extends Activity {
                 }
             }else{
                 if(_bluetoothLEService != null) {
-                    //_bluetoothLEService.setHandler(mHandler);
-                }else{ // try to get the BLE service from the BLEScanActivity
+                    if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
+                        btnConnect.setText("Disconnect");
+                    }else{
+                        btnConnect.setText("Connect");
+                    }
+                }else{ // try to get the BLE service from the calling activity
                     Object obj = PassObject.getObject();
                     if(obj instanceof BluetoothLeService) {
                         _bluetoothLEService = (BluetoothLeService) obj;
@@ -508,8 +510,14 @@ public class PSensor extends Activity {
             if(_bluetoothLEService != null){
                 Log.d(TAG, "disconnecting BLE...");
                 _bluetoothLEService.disconnect();
+                _bluetoothLEService.close();
                 btnConnect.setText("Connect");
             }
+        }else{
+            //disconnect so you can reconnect
+            _bluetoothLEService.disconnect();
+            Intent serverIntent = new Intent(this, BLEScanActivity.class);
+            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
         }
     }
 

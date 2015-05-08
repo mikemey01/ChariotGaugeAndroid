@@ -246,25 +246,15 @@ public class BoostActivity extends Activity implements Runnable {
 
     //Activity transfer handling
     public void goHome(View v){
-        unbindService(mServiceConnection);
-        if(!isBLE) {
-            PassObject.setObject(mSerialService);
-            PassObject.setType(1);
-        }else{
-            PassObject.setObject(_bluetoothLeService);
-            PassObject.setType(2);
-        }
         onBackPressed();
         finish();
     }
 
     @Override
     public void onBackPressed(){
-        if(isBLE){
-            _bluetoothLeService.close();
-        }
+        unbindService(mServiceConnection);
         paused = true;
-        //workerHandler.getLooper().quit();
+        passObject();
         super.onBackPressed();
     }
 
@@ -272,7 +262,7 @@ public class BoostActivity extends Activity implements Runnable {
     public void buttonDisplayClick(View v){
         paused = true;
         //workerHandler.getLooper().quit();
-        PassObject.setObject(mSerialService);
+        passObject();
         Intent chartIntent = new Intent(this, SingleChartActivity.class);
         chartIntent.putExtra("chartType", CURRENT_TOKEN);
         startActivity(chartIntent);
@@ -326,5 +316,14 @@ public class BoostActivity extends Activity implements Runnable {
         showVoltMeter = sp.getBoolean("showVoltMeter", true);
     }
 
+    private void passObject(){
+        if(!isBLE){
+            PassObject.setObject(mSerialService);
+            PassObject.setType(1);
+        }else{
+            PassObject.setObject(_bluetoothLeService);
+            PassObject.setType(2);
+        }
+    }
 
 }

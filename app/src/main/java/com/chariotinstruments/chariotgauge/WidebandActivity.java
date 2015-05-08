@@ -17,9 +17,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-
 import android.view.ViewManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -233,22 +231,15 @@ public class WidebandActivity extends Activity implements Runnable {
 
     //Activity transfer handling
     public void goHome(View v){
-        unbindService(mServiceConnection);
-        if(!isBLE) {
-            PassObject.setObject(mSerialService);
-            PassObject.setType(1);
-        }else{
-            PassObject.setObject(_bluetoothLeService);
-            PassObject.setType(2);
-        }
         onBackPressed();
         finish();
     }
 
     @Override
     public void onBackPressed(){
+        unbindService(mServiceConnection);
         paused = true;
-        workerHandler.getLooper().quit();
+        passObject();
         super.onBackPressed();
     }
     
@@ -256,7 +247,7 @@ public class WidebandActivity extends Activity implements Runnable {
     public void buttonDisplayClick(View v){
         paused = true;
         workerHandler.getLooper().quit();
-        PassObject.setObject(mSerialService);
+        passObject();
         Intent chartIntent = new Intent(this, SingleChartActivity.class);
         chartIntent.putExtra("chartType", CURRENT_TOKEN);
         startActivity(chartIntent);
@@ -306,5 +297,15 @@ public class WidebandActivity extends Activity implements Runnable {
         showDigital = sp.getBoolean("showDigital", true);
         showNightMode = sp.getBoolean("showNightMode", false);
         showVoltMeter = sp.getBoolean("showVoltMeter", true);
+    }
+
+    private void passObject(){
+        if(!isBLE){
+            PassObject.setObject(mSerialService);
+            PassObject.setType(1);
+        }else{
+            PassObject.setObject(_bluetoothLeService);
+            PassObject.setType(2);
+        }
     }
 }
