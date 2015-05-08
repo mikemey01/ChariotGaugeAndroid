@@ -434,7 +434,7 @@ public class BLEScanActivity extends ListActivity {
             mBluetoothLeService.setCharacteristicNotification(characteristic, true);
             mBluetoothLeService.setHandler(_bleHandler);
 
-            //onBackPressed();
+            onBackPressed();
         }
     }
 

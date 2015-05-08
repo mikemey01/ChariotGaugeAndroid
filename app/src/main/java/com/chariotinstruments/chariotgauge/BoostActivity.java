@@ -43,6 +43,8 @@ public class BoostActivity extends Activity implements Runnable {
     Thread       thread;
     boolean      isBLE;
 
+    String totalSValue;
+
 
     //Prefs vars
     View     root;
@@ -95,7 +97,7 @@ public class BoostActivity extends Activity implements Runnable {
 
         //Instantiate the gaugeBuilder.
         analogGauge     = (GaugeBuilder) findViewById(R.id.analogGauge);
-        txtViewDigital  = (TextView) findViewById(R.id.txtViewDigital); 
+        txtViewDigital  = (TextView) findViewById(R.id.txtViewDigital);
         txtViewVolts    = (TextView) findViewById(R.id.txtViewVolts);
         txtViewVoltsText= (TextView) findViewById(R.id.txtViewVoltsText);
         multiGauge      = new MultiGauges(context);
@@ -115,7 +117,7 @@ public class BoostActivity extends Activity implements Runnable {
         multiGaugeVolts.buildGauge(VOLT_TOKEN);
 
         //Check if the gauge uses negative numbers or not.
-        if(analogGauge.getAbsoluteNumbers()){ 
+        if(analogGauge.getAbsoluteNumbers()){
             txtViewDigital.setText(Float.toString(Math.abs(multiGauge.getMinValue())));
         }else{
             txtViewDigital.setText(Float.toString(multiGauge.getMinValue()));
@@ -138,7 +140,7 @@ public class BoostActivity extends Activity implements Runnable {
         }else{
             _bluetoothLeService = (BluetoothLeService) obj;
         }
-        
+
         //Check if the serial service object is null - assign the handler.
         if(mSerialService != null && !isBLE){
             //Update the BluetoothSerialService instance's handler to this activities.
@@ -191,7 +193,7 @@ public class BoostActivity extends Activity implements Runnable {
                 //Redraw the needle to the correct value.
                 currentMsg = readMessage;
 
-                Log.d("Boost HERE", readMessage);
+                //Log.d("Boost HERE", readMessage);
 
                 Message workerMsg = workerHandler.obtainMessage(1, currentMsg);
                 workerMsg.sendToTarget();
@@ -218,17 +220,16 @@ public class BoostActivity extends Activity implements Runnable {
         if(!paused){
             analogGauge.setValue(multiGauge.getCurrentGaugeValue());
             txtViewDigital.setText(Float.toString(Math.abs(multiGauge.getCurrentGaugeValue())));
-            txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
+            //txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
+            txtViewVolts.setText(Float.toString(currentSValue));
         }
     }
 
-    public void testMethod(){
-        //test tabs
-    }
-
-
     private void parseInput(String sValue){
         String[] tokens=sValue.split(","); //split the input into an array.
+
+        //todo
+        totalSValue = sValue;
 
         try {
             currentSValue = Float.valueOf(tokens[CURRENT_TOKEN].toString());//Get current token for this gauge activity, cast as float.
@@ -245,6 +246,7 @@ public class BoostActivity extends Activity implements Runnable {
 
     //Activity transfer handling
     public void goHome(View v){
+        unbindService(mServiceConnection);
         if(!isBLE) {
             PassObject.setObject(mSerialService);
             PassObject.setType(1);
@@ -258,11 +260,14 @@ public class BoostActivity extends Activity implements Runnable {
 
     @Override
     public void onBackPressed(){
+        if(isBLE){
+            _bluetoothLeService.close();
+        }
         paused = true;
         //workerHandler.getLooper().quit();
         super.onBackPressed();
     }
-    
+
     //chart/gauge display click handling
     public void buttonDisplayClick(View v){
         paused = true;

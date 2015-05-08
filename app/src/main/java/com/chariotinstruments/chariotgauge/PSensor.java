@@ -201,16 +201,15 @@ public class PSensor extends Activity {
                 }
                 break;
             case R.id.settingsBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
             case R.id.widebandBtn:
                 passBluetooth();
                 startActivity(new Intent(getApplicationContext(), WidebandActivity.class));
-                //startActivity(new Intent(getApplicationContext(), SingleChartActivity.class));
                 break;
             case R.id.customBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), TemperatureActivity.class));
                 break;
             case R.id.boostBtn:
@@ -218,27 +217,27 @@ public class PSensor extends Activity {
                 startActivity(new Intent(getApplicationContext(), BoostActivity.class));
                 break;
             case R.id.rpmBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), RPMActivity.class));
                 break;
             case R.id.oilBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), OilActivity.class));
                 break;
             case R.id.speedBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), SpeedActivity.class));
                 break;
             case R.id.voltBtn:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), VoltageActivity.class));
                 break;
             case R.id.multiBtn1:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), TwoGaugeActivity.class));
                 break;
             case R.id.multiBtn2:
-                PassObject.setObject(mSerialService);
+                passBluetooth();
                 startActivity(new Intent(getApplicationContext(), FourGaugeActivity.class));
                 break;
             default:

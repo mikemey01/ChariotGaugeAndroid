@@ -233,6 +233,7 @@ public class WidebandActivity extends Activity implements Runnable {
 
     //Activity transfer handling
     public void goHome(View v){
+        unbindService(mServiceConnection);
         if(!isBLE) {
             PassObject.setObject(mSerialService);
             PassObject.setType(1);
