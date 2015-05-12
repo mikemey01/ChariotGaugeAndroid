@@ -220,16 +220,13 @@ public class BoostActivity extends Activity implements Runnable {
         if(!paused){
             analogGauge.setValue(multiGauge.getCurrentGaugeValue());
             txtViewDigital.setText(Float.toString(Math.abs(multiGauge.getCurrentGaugeValue())));
-            //txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
-            txtViewVolts.setText(Float.toString(currentSValue));
+            txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
+            //txtViewVolts.setText(Float.toString(currentSValue));
         }
     }
 
     private void parseInput(String sValue){
         String[] tokens=sValue.split(","); //split the input into an array.
-
-        //todo
-        totalSValue = sValue;
 
         try {
             currentSValue = Float.valueOf(tokens[CURRENT_TOKEN].toString());//Get current token for this gauge activity, cast as float.
@@ -252,7 +249,9 @@ public class BoostActivity extends Activity implements Runnable {
 
     @Override
     public void onBackPressed(){
-        unbindService(mServiceConnection);
+        if(_bluetoothLeService != null) {
+            unbindService(mServiceConnection);
+        }
         paused = true;
         passObject();
         super.onBackPressed();

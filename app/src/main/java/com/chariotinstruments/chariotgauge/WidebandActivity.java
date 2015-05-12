@@ -237,7 +237,9 @@ public class WidebandActivity extends Activity implements Runnable {
 
     @Override
     public void onBackPressed(){
-        unbindService(mServiceConnection);
+        if(_bluetoothLeService != null) {
+            unbindService(mServiceConnection);
+        }
         paused = true;
         passObject();
         super.onBackPressed();

@@ -46,6 +46,8 @@ import java.util.UUID;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class BLEScanActivity extends ListActivity {
 
+    //TODO: Need to alert user after two scan attempts to try classic bluetooth.
+
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
