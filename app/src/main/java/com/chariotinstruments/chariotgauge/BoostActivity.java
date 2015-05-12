@@ -43,9 +43,6 @@ public class BoostActivity extends Activity implements Runnable {
     Thread       thread;
     boolean      isBLE;
 
-    String totalSValue;
-
-
     //Prefs vars
     View     root;
     boolean  showAnalog; //Display the analog gauge or not.
