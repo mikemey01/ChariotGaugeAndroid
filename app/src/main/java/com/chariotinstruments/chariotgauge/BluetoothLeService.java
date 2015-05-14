@@ -210,7 +210,7 @@ public class BluetoothLeService extends Service {
         if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress) && mBluetoothGatt != null) {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
-                mConnectionState = STATE_CONNECTING;
+                mConnectionState = STATE_CONNECTED;
                 return true;
             } else {
                 return false;
@@ -286,6 +286,7 @@ public class BluetoothLeService extends Service {
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+        mConnectionState = STATE_CONNECTED;
 
 //        if (UUID_CHARIOT_GAUGE.compareTo(characteristic.getUuid())==0) {
 //            //Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();

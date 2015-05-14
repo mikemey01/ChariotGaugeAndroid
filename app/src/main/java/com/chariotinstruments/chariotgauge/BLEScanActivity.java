@@ -72,6 +72,7 @@ public class BLEScanActivity extends ListActivity {
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
     private boolean mConnected = false;
     private BluetoothGattCharacteristic mNotifyCharacteristic;
+    private int _attemptsCount;
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
@@ -450,9 +451,11 @@ public class BLEScanActivity extends ListActivity {
     }
 
     public void goHome(){
-        unbindService(mServiceConnection);
-        PassObject.setObject(mBluetoothLeService);
-        PassObject.setType(2);
+        if(mBluetoothLeService != null) {
+            unbindService(mServiceConnection);
+            PassObject.setObject(mBluetoothLeService);
+            PassObject.setType(2);
+        }
         finish();
     }
 

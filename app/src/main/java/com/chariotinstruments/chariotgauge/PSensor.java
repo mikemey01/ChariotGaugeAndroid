@@ -157,7 +157,7 @@ public class PSensor extends Activity {
                     mSerialService.setHandler(mHandler);
                     //Update the connection status on the dashboard.
                     if (getConnectionState() == BluetoothSerialService.STATE_CONNECTED) {
-                        btnConnect.setText("Disconnect");
+                        btnConnect.setText("Connected! \n Tap to Disconnect");
                     } else {
                         btnConnect.setText("Connect");
                     }
@@ -176,7 +176,7 @@ public class PSensor extends Activity {
                 if (_bluetoothLEService != null) {
                     _bluetoothLEService.setHandler(_BLEHandler);
                     if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
-                        btnConnect.setText("Disconnect");
+                        btnConnect.setText("Connected! \n Tap to Disconnect");
                     } else {
                         btnConnect.setText("Connect");
                     }
@@ -269,6 +269,8 @@ public class PSensor extends Activity {
 
     }
 
+    //TODO: I think the passobject is holding onto a null _bluetoothLeService.
+
     public void onResume(){
         super.onResume();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -282,8 +284,10 @@ public class PSensor extends Activity {
                 }
             }else{
                 if(_bluetoothLEService != null) {
+
                     if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
-                        btnConnect.setText("Disconnect");
+                        Toast.makeText(getApplicationContext(), "mad it", Toast.LENGTH_SHORT).show();
+                        btnConnect.setText("Connected! \n Tap to Disconnect");
                     }else{
                         btnConnect.setText("Connect");
                     }
@@ -296,7 +300,7 @@ public class PSensor extends Activity {
                     if (_bluetoothLEService != null) {
                         _bluetoothLEService.setHandler(_BLEHandler);
                         if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
-                            btnConnect.setText("Disconnect");
+                            btnConnect.setText("Connected! \n Tap to Disconnect");
                         } else {
                             btnConnect.setText("Connect");
                         }
