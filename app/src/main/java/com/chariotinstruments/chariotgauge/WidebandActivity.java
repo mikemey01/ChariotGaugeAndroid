@@ -70,16 +70,16 @@ public class WidebandActivity extends Activity implements Runnable {
     private static Handler workerHandler;
 
     //Used for BLE Service life-cycle
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            _bluetoothLeService = null;
-        }
-    };
+//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+//        @Override
+//        public void onServiceConnected(ComponentName componentName, IBinder service) {
+//            _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+//        }
+//        @Override
+//        public void onServiceDisconnected(ComponentName componentName) {
+//            _bluetoothLeService = null;
+//        }
+//    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,9 +136,9 @@ public class WidebandActivity extends Activity implements Runnable {
         }
 
         if(_bluetoothLeService != null && isBLE){
-            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-            startService(gattServiceIntent);
-            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+//            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+//            startService(gattServiceIntent);
+//            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
             _bluetoothLeService.setHandler(mHandler);
             Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
@@ -238,7 +238,7 @@ public class WidebandActivity extends Activity implements Runnable {
     @Override
     public void onBackPressed(){
         if(_bluetoothLeService != null) {
-            unbindService(mServiceConnection);
+//            unbindService(mServiceConnection);
         }
         paused = true;
         passObject();

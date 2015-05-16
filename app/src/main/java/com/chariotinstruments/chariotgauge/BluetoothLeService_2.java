@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.UUID;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class BluetoothLeService {
+public class BluetoothLeService_2 extends Service {
     private final static String TAG = "BLEService";
 
     private BluetoothManager mBluetoothManager;
@@ -54,7 +54,6 @@ public class BluetoothLeService {
     private BluetoothGatt mBluetoothGatt;
     private int mConnectionState = STATE_DISCONNECTED;
     private Handler _handler;
-    private Context _context;
 
     public static final int STATE_DISCONNECTED = 0;
     public static final int STATE_CONNECTING = 1;
@@ -68,16 +67,6 @@ public class BluetoothLeService {
 
     public final static UUID UUID_CHARIOT_GAUGE = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
     public final static UUID UUID_CHARACTERISTIC_CHARIOT_GAUGE = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb");
-
-    //Constructor
-    public BluetoothLeService(Context context, Handler handler) {
-        mConnectionState = STATE_DISCONNECTED;
-        _handler = handler;
-        _context = context;
-        if(!initialize(context)){
-            Log.d(TAG, "Broken in the constructor");
-        }
-    }
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -129,70 +118,71 @@ public class BluetoothLeService {
 
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
-        _context.sendBroadcast(intent);
+        sendBroadcast(intent);
     }
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
         final byte delimiter = 13; //new line character
-        final byte delimiter2 = 10; //carriage return char.
         byte[] buffer = new byte[1024];
         int readBufferPosition = 0;
 
         // For all other profiles, writes the data formatted in HEX.
-//        final byte[] data = characteristic.getValue();
-//        if (data != null) {
-//            for(int i=0;i<data.length;i++){ //remove the CRLF
-//                byte b = data[i];
-//                if(b == delimiter2){
-//                    byte[] encodedBytes = new byte[readBufferPosition];
-//                    readBufferPosition = 0;
-//                    _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, buffer).sendToTarget();
-//                }else{
-//                    buffer[readBufferPosition++] = b;
-//                }
-//            }
-//        }
         final byte[] data = characteristic.getValue();
         if (data != null && data.length > 5) {
-            final StringBuilder stringBuilder = new StringBuilder();
-            for(byte byteChar : data) {
-                if(byteChar != delimiter && byteChar != delimiter2) {
-                    //stringBuilder.append(byteChar);
-                    readBufferPosition++;
+            for(int i=0;i<data.length;i++){ //remove the CRLF
+                byte b = data[i];
+                if(b == delimiter){
+                    byte[] encodedBytes = new byte[readBufferPosition];
+                    readBufferPosition = 0;
+                    _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, data).sendToTarget();
+                }else{
+                    buffer[readBufferPosition++] = b;
                 }
             }
-            byte[] encodedBytes = new byte[readBufferPosition];
-            readBufferPosition = 0;
-            for(byte byteChar : data){
-                if(byteChar != delimiter && byteChar != delimiter2) {
-                    encodedBytes[readBufferPosition] = byteChar;
-                    readBufferPosition++;
-                }
-            }
-            String readMessage = new String(encodedBytes, 0, encodedBytes.length);
-            _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, encodedBytes).sendToTarget();
-            Log.i("FROM BLE SERVICE", readMessage);
         }
     }
+
+
+    public class LocalBinder extends Binder {
+        BluetoothLeService_2 getService() {
+            return BluetoothLeService_2.this;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        // After using a given device, you should make sure that BluetoothGatt.close() is called
+        // such that resources are cleaned up properly.  In this particular example, close() is
+        // invoked when the UI is disconnected from the Service.
+        //close();
+        return super.onUnbind(intent);
+    }
+
+    private final IBinder mBinder = new LocalBinder();
 
     /**
      * Initializes a reference to the local Bluetooth adapter.
      *
      * @return Return true if the initialization is successful.
      */
-    public boolean initialize(Context context) {
+    public boolean initialize() {
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
         if (mBluetoothManager == null) {
-            mBluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+            mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
                 Log.e(TAG, "Unable to initialize BluetoothManager.");
                 return false;
             }
         }
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
@@ -210,7 +200,7 @@ public class BluetoothLeService {
      *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
      *         callback.
      */
-    public boolean connect(final String address, Context context) {
+    public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
@@ -234,7 +224,7 @@ public class BluetoothLeService {
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        mBluetoothGatt = device.connectGatt(context, false, mGattCallback);
+        mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;
@@ -300,7 +290,7 @@ public class BluetoothLeService {
 
 //        if (UUID_CHARIOT_GAUGE.compareTo(characteristic.getUuid())==0) {
 //            //Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
-//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID_CHARIOT_GAUGE);
+//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(characteristic.getUuid());
 //            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
 //            mBluetoothGatt.writeDescriptor(descriptor);
 //        }

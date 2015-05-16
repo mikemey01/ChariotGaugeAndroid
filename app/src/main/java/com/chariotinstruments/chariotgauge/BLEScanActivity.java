@@ -77,24 +77,24 @@ public class BLEScanActivity extends ListActivity {
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
 
-    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder service) {
-            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
-                finish();
-            }
-            // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            mBluetoothLeService = null;
-        }
-    };
+//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+//
+//        @Override
+//        public void onServiceConnected(ComponentName componentName, IBinder service) {
+//            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+//            if (!mBluetoothLeService.initialize()) {
+//                Log.e(TAG, "Unable to initialize Bluetooth");
+//                finish();
+//            }
+//            // Automatically connects to the device upon successful start-up initialization.
+//            mBluetoothLeService.connect(mDeviceAddress);
+//        }
+//
+//        @Override
+//        public void onServiceDisconnected(ComponentName componentName) {
+//            mBluetoothLeService = null;
+//        }
+//    };
 
     //temp handler
     //Handles the data being sent back from the BluetoothLeService class.
@@ -144,8 +144,7 @@ public class BLEScanActivity extends ListActivity {
             return;
         }
 
-        Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-        bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        mBluetoothLeService = new BluetoothLeService(this, _bleHandler);
     }
 
     @Override
@@ -199,8 +198,10 @@ public class BLEScanActivity extends ListActivity {
         //from control
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         if (mBluetoothLeService != null) {
-            final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+            final boolean result = mBluetoothLeService.connect(mDeviceAddress, this);
             Log.d(TAG, "Connect request result=" + result);
+        }else{
+            Log.d(TAG, "prolem in onResume");
         }
     }
 
@@ -398,7 +399,7 @@ public class BLEScanActivity extends ListActivity {
         Log.d(TAG, "Connecting device..");
         //Connect device, BroadcastReceiver call back calls connectService().
         if(mBluetoothLeService != null) {
-            mBluetoothLeService.connect(mDeviceAddress);
+            mBluetoothLeService.connect(mDeviceAddress, this);
         }else{
             Log.d(TAG, "mBluetoothLeService is null");
         }
@@ -452,7 +453,7 @@ public class BLEScanActivity extends ListActivity {
 
     public void goHome(){
         if(mBluetoothLeService != null) {
-            unbindService(mServiceConnection);
+//            unbindService(mServiceConnection);
             PassObject.setObject(mBluetoothLeService);
             PassObject.setType(2);
         }
