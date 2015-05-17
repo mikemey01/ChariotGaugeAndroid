@@ -101,18 +101,6 @@ public class DualChartActivity extends Activity implements Runnable {
     BluetoothLeService _bluetoothLeService;
     private static Handler workerHandler;
 
-    //Used for BLE Service life-cycle
-//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-//        @Override
-//        public void onServiceConnected(ComponentName componentName, IBinder service) {
-//            _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-//        }
-//        @Override
-//        public void onServiceDisconnected(ComponentName componentName) {
-//            _bluetoothLeService = null;
-//        }
-//    };
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -198,10 +186,6 @@ public class DualChartActivity extends Activity implements Runnable {
         }
 
         if(_bluetoothLeService != null && isBLE){
-//            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-//            startService(gattServiceIntent);
-//            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
             _bluetoothLeService.setHandler(mHandler);
         }
             
@@ -506,9 +490,6 @@ public class DualChartActivity extends Activity implements Runnable {
     //Kills the looper before going back home
     @Override
     public void onBackPressed(){
-        if(_bluetoothLeService != null) {
-//            unbindService(mServiceConnection);
-        }
         paused = true;
         passObject();
         super.onBackPressed();
@@ -530,7 +511,6 @@ public class DualChartActivity extends Activity implements Runnable {
     public void buttonOneClick(View v){   
         paused = false;
         btnTwo.setBackgroundResource(Color.TRANSPARENT);
-        //Toast.makeText(getApplicationContext(), "Max value reset.", Toast.LENGTH_SHORT).show();
     }
 
     //Button two handling.

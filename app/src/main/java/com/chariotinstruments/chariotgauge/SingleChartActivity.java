@@ -81,18 +81,6 @@ public class SingleChartActivity extends Activity implements Runnable {
     BluetoothLeService _bluetoothLeService;
     private static Handler workerHandler;
 
-    //Used for BLE Service life-cycle
-//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-//        @Override
-//        public void onServiceConnected(ComponentName componentName, IBinder service) {
-//            _bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-//        }
-//        @Override
-//        public void onServiceDisconnected(ComponentName componentName) {
-//            _bluetoothLeService = null;
-//        }
-//    };
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,10 +161,6 @@ public class SingleChartActivity extends Activity implements Runnable {
         }
 
         if(_bluetoothLeService != null && isBLE){
-//            Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-//            startService(gattServiceIntent);
-//            bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
             _bluetoothLeService.setHandler(mHandler);
         }
             
@@ -474,9 +458,6 @@ public class SingleChartActivity extends Activity implements Runnable {
             PassObject.setObject(mSerialService);
             PassObject.setType(1);
         }else{
-            if(_bluetoothLeService != null) {
-                //unbindService(mServiceConnection);
-            }
             PassObject.setObject(_bluetoothLeService);
             PassObject.setType(2);
         }

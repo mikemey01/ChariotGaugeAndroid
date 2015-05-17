@@ -133,35 +133,22 @@ public class BluetoothLeService {
     }
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-        final Intent intent = new Intent(action);
         final byte delimiter = 13; //new line character
         final byte delimiter2 = 10; //carriage return char.
-        byte[] buffer = new byte[1024];
         int readBufferPosition = 0;
 
-        // For all other profiles, writes the data formatted in HEX.
-//        final byte[] data = characteristic.getValue();
-//        if (data != null) {
-//            for(int i=0;i<data.length;i++){ //remove the CRLF
-//                byte b = data[i];
-//                if(b == delimiter2){
-//                    byte[] encodedBytes = new byte[readBufferPosition];
-//                    readBufferPosition = 0;
-//                    _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, buffer).sendToTarget();
-//                }else{
-//                    buffer[readBufferPosition++] = b;
-//                }
-//            }
-//        }
         final byte[] data = characteristic.getValue();
         if (data != null && data.length > 5) {
             final StringBuilder stringBuilder = new StringBuilder();
+
+            //Get the length of the new byte array.
             for(byte byteChar : data) {
                 if(byteChar != delimiter && byteChar != delimiter2) {
-                    //stringBuilder.append(byteChar);
                     readBufferPosition++;
                 }
             }
+
+            //Added all the data that isn't a 10/13
             byte[] encodedBytes = new byte[readBufferPosition];
             readBufferPosition = 0;
             for(byte byteChar : data){
@@ -170,9 +157,9 @@ public class BluetoothLeService {
                     readBufferPosition++;
                 }
             }
-            String readMessage = new String(encodedBytes, 0, encodedBytes.length);
+
+            //Pass the data up to the calling activity
             _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, encodedBytes).sendToTarget();
-            Log.i("FROM BLE SERVICE", readMessage);
         }
     }
 
@@ -298,12 +285,6 @@ public class BluetoothLeService {
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
         mConnectionState = STATE_CONNECTED;
 
-//        if (UUID_CHARIOT_GAUGE.compareTo(characteristic.getUuid())==0) {
-//            //Toast.makeText(getApplicationContext(), "Made it.", Toast.LENGTH_SHORT).show();
-//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID_CHARIOT_GAUGE);
-//            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-//            mBluetoothGatt.writeDescriptor(descriptor);
-//        }
     }
 
     /**

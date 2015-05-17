@@ -6,20 +6,16 @@ import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,12 +26,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,9 +55,6 @@ public class BLEScanActivity extends ListActivity {
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-
-    private TextView mConnectionState;
-    private TextView mDataField;
     private String mDeviceName;
     private String mDeviceAddress;
     private ExpandableListView mGattServicesList;
@@ -72,31 +62,10 @@ public class BLEScanActivity extends ListActivity {
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
     private boolean mConnected = false;
     private BluetoothGattCharacteristic mNotifyCharacteristic;
-    private int _attemptsCount;
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
 
-//    private final ServiceConnection mServiceConnection = new ServiceConnection() {
-//
-//        @Override
-//        public void onServiceConnected(ComponentName componentName, IBinder service) {
-//            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-//            if (!mBluetoothLeService.initialize()) {
-//                Log.e(TAG, "Unable to initialize Bluetooth");
-//                finish();
-//            }
-//            // Automatically connects to the device upon successful start-up initialization.
-//            mBluetoothLeService.connect(mDeviceAddress);
-//        }
-//
-//        @Override
-//        public void onServiceDisconnected(ComponentName componentName) {
-//            mBluetoothLeService = null;
-//        }
-//    };
-
-    //temp handler
     //Handles the data being sent back from the BluetoothLeService class.
     private final Handler _bleHandler = new Handler() {
         @Override
@@ -453,7 +422,6 @@ public class BLEScanActivity extends ListActivity {
 
     public void goHome(){
         if(mBluetoothLeService != null) {
-//            unbindService(mServiceConnection);
             PassObject.setObject(mBluetoothLeService);
             PassObject.setType(2);
         }
