@@ -312,7 +312,7 @@ public class FourGaugeActivity extends Activity implements Runnable{
     public void buttonDisplayClick(View v){
         paused = true;
         //workerHandler.getLooper().quit();
-        PassObject.setObject(mSerialService);
+        passObject();
         Intent chartIntent = new Intent(this, QuadChartActivity.class);
         startActivity(chartIntent);
     }

@@ -287,9 +287,9 @@ public class QuadChartActivity extends Activity implements Runnable{
     public void setDigitalValues(){
         subTitleData1.setText(Float.toString(Math.abs(multiGauge1.getCurrentGaugeValue())));
         subTitleData2.setText(Float.toString(Math.abs(multiGauge2.getCurrentGaugeValue())));
-        subTitleData4.setText(Float.toString(Math.abs(multiGauge3.getCurrentGaugeValue())));
-        subTitleData5.setText(Float.toString(Math.abs(multiGauge4.getCurrentGaugeValue())));
-        subTitleData3.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
+        subTitleData3.setText(Float.toString(Math.abs(multiGauge3.getCurrentGaugeValue())));
+        subTitleData4.setText(Float.toString(Math.abs(multiGauge4.getCurrentGaugeValue())));
+        subTitleData5.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
     }
     
     

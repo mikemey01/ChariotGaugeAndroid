@@ -67,6 +67,10 @@
     <!-- Whats New String -->
     <string name="whats_new">        The Chariot Gauge controller is now for sale! \n\n
         Please visit: https://www.chariotgauge.com/ \n\n
+
+        May-18-2015: \n
+            -Fixed Quad-chart digital values for oil, volts. \n
+            -Added Bluetooth LE support.
         
         Feb-21-2015: \n
         	-Fixed gauge display for lollipop. \n\n
