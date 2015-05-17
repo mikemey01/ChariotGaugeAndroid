@@ -104,9 +104,9 @@ public class PSensor extends Activity {
         btnCustom = (Button) findViewById(R.id.customBtn);
         btnMulti1 = (Button) findViewById(R.id.multiBtn1);
         btnMulti2 = (Button) findViewById(R.id.multiBtn2);
-        btnRPM = (Button) findViewById(R.id.rpmBtn);
-        btnSpeed = (Button) findViewById(R.id.speedBtn);
-        btnVolts = (Button) findViewById(R.id.voltBtn);
+        //btnRPM = (Button) findViewById(R.id.rpmBtn);
+        //btnSpeed = (Button) findViewById(R.id.speedBtn);
+        //btnVolts = (Button) findViewById(R.id.voltBtn);
 
         try {
             typeFaceBtn = Typeface.createFromAsset(getAssets(), "fonts/CaviarDreams_Bold.ttf");
@@ -128,9 +128,9 @@ public class PSensor extends Activity {
         btnCustom.setTypeface(typeFaceBtn);
         btnMulti1.setTypeface(typeFaceBtn);
         btnMulti2.setTypeface(typeFaceBtn);
-        btnRPM.setTypeface(typeFaceBtn);
-        btnSpeed.setTypeface(typeFaceBtn);
-        btnVolts.setTypeface(typeFaceBtn);
+//        btnRPM.setTypeface(typeFaceBtn);
+//        btnSpeed.setTypeface(typeFaceBtn);
+//        btnVolts.setTypeface(typeFaceBtn);
 
         //Bluetooth LE check
         isBLE = true;
@@ -214,21 +214,21 @@ public class PSensor extends Activity {
                 passBluetooth();
                 startActivity(new Intent(getApplicationContext(), BoostActivity.class));
                 break;
-            case R.id.rpmBtn:
-                passBluetooth();
-                startActivity(new Intent(getApplicationContext(), RPMActivity.class));
-                break;
+//            case R.id.rpmBtn:
+//                passBluetooth();
+//                startActivity(new Intent(getApplicationContext(), RPMActivity.class));
+//                break;
+//            case R.id.speedBtn:
+//                passBluetooth();
+//                startActivity(new Intent(getApplicationContext(), SpeedActivity.class));
+//                break;
+//            case R.id.voltBtn:
+//                passBluetooth();
+//                startActivity(new Intent(getApplicationContext(), VoltageActivity.class));
+//                break;
             case R.id.oilBtn:
                 passBluetooth();
                 startActivity(new Intent(getApplicationContext(), OilActivity.class));
-                break;
-            case R.id.speedBtn:
-                passBluetooth();
-                startActivity(new Intent(getApplicationContext(), SpeedActivity.class));
-                break;
-            case R.id.voltBtn:
-                passBluetooth();
-                startActivity(new Intent(getApplicationContext(), VoltageActivity.class));
                 break;
             case R.id.multiBtn1:
                 passBluetooth();

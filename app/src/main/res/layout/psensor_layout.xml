@@ -69,12 +69,12 @@
                 android:onClick="onClickActivity"
                 android:text="@string/boost_title" />
             
-            <Button
+            <!--<Button
                 android:id="@+id/rpmBtn"
                 style="@style/DashboardButton"
                 android:drawableTop="@drawable/boost_logo"
                 android:onClick="onClickActivity"
-                android:text="@string/rpm_title" />
+                android:text="@string/rpm_title" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -97,12 +97,12 @@
                 android:onClick="onClickActivity"
                 android:text="@string/temperature_title" />
             
-            <Button
+            <!--<Button
                 android:id="@+id/speedBtn"
                 style="@style/DashboardButton"
                 android:drawableTop="@drawable/custom_logo"
                 android:onClick="onClickActivity"
-                android:text="@string/speed_title" />
+                android:text="@string/speed_title" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -125,12 +125,12 @@
                 android:onClick="onClickActivity"
                 android:text="@string/custom_multi_2" />
             
-            <Button
+            <!--<Button
                 android:id="@+id/voltBtn"
                 style="@style/DashboardButton"
                 android:drawableTop="@drawable/custom_logo"
                 android:onClick="onClickActivity"
-                android:text="@string/volt_title" />
+                android:text="@string/volt_title" />-->
             
         </LinearLayout>
     </LinearLayout>
