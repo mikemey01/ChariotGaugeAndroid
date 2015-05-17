@@ -286,7 +286,6 @@ public class PSensor extends Activity {
                 if(_bluetoothLEService != null) {
 
                     if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
-                        Toast.makeText(getApplicationContext(), "mad it", Toast.LENGTH_SHORT).show();
                         btnConnect.setText("Connected! \n Tap to Disconnect");
                     }else{
                         btnConnect.setText("Connect");
