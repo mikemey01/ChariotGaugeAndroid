@@ -136,30 +136,36 @@ public class BluetoothLeService {
         final byte delimiter = 13; //new line character
         final byte delimiter2 = 10; //carriage return char.
         int readBufferPosition = 0;
+        byte[] buffer = new byte[1024];
 
         final byte[] data = characteristic.getValue();
         if (data != null && data.length > 5) {
-            final StringBuilder stringBuilder = new StringBuilder();
 
             //Get the length of the new byte array.
             for(byte byteChar : data) {
-                if(byteChar != delimiter && byteChar != delimiter2) {
+                if(byteChar != delimiter2) {
+                    buffer[readBufferPosition] = byteChar;
                     readBufferPosition++;
                 }
             }
 
             //Added all the data that isn't a 10/13
-            byte[] encodedBytes = new byte[readBufferPosition];
-            readBufferPosition = 0;
-            for(byte byteChar : data){
-                if(byteChar != delimiter && byteChar != delimiter2) {
-                    encodedBytes[readBufferPosition] = byteChar;
-                    readBufferPosition++;
-                }
-            }
+//            byte[] encodedBytes = new byte[readBufferPosition];
+//            readBufferPosition = 0;
+//            for(byte byteChar : data){
+//                if(byteChar != delimiter && byteChar != delimiter2) {
+//                    encodedBytes[readBufferPosition] = byteChar;
+//                    buffer[readBufferPosition] = byteChar;
+//                    readBufferPosition++;
+//                }
+//            }
 
             //Pass the data up to the calling activity
-            _handler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, encodedBytes).sendToTarget();
+            _handler.obtainMessage(PSensor.MESSAGE_READ, readBufferPosition, -1, buffer).sendToTarget();
+
+            //temp
+            String readMessage = new String(buffer, 0, readBufferPosition);
+            Log.i("FROM BLE", readMessage);
         }
     }
 
@@ -301,5 +307,9 @@ public class BluetoothLeService {
 
     public int getmConnectionState(){
         return mConnectionState;
+    }
+
+    public boolean getRSSI(){
+        return mBluetoothGatt.readRemoteRssi();
     }
 }

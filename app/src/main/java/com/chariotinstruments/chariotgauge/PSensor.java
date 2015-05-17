@@ -175,7 +175,7 @@ public class PSensor extends Activity {
 
                 if (_bluetoothLEService != null) {
                     _bluetoothLEService.setHandler(_BLEHandler);
-                    if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
+                    if (_bluetoothLEService.getRSSI()) { //OLD: getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED
                         btnConnect.setText("Connected! \n Tap to Disconnect");
                     } else {
                         btnConnect.setText("Connect");
@@ -283,13 +283,8 @@ public class PSensor extends Activity {
                     setupBT();
                 }
             }else{
-                if(_bluetoothLEService != null) {
-
-                    if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
-                        btnConnect.setText("Connected! \n Tap to Disconnect");
-                    }else{
-                        btnConnect.setText("Connect");
-                    }
+                if(isBLEConnected()) {
+                    btnConnect.setText("Connected! \n Tap to Disconnect");
                 }else{ // try to get the BLE service from the calling activity
                     Object obj = PassObject.getObject();
                     if(obj instanceof BluetoothLeService) {
@@ -298,7 +293,7 @@ public class PSensor extends Activity {
 
                     if (_bluetoothLEService != null) {
                         _bluetoothLEService.setHandler(_BLEHandler);
-                        if (getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED) {
+                        if (isBLEConnected()) { //OLD: getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED
                             btnConnect.setText("Connected! \n Tap to Disconnect");
                         } else {
                             btnConnect.setText("Connect");
@@ -506,10 +501,10 @@ public class PSensor extends Activity {
 
 
     private void connectBLE(){
-        if (getBLEConnectionState() == BluetoothLeService.STATE_DISCONNECTED) {
+        if (!isBLEConnected()) {
             Intent serverIntent = new Intent(this, BLEScanActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-        }else if(getBLEConnectionState() == BluetoothLeService.STATE_CONNECTED){
+        }else if(isBLEConnected()){
             if(_bluetoothLEService != null){
                 Log.d(TAG, "disconnecting BLE...");
                 _bluetoothLEService.disconnect();
@@ -524,11 +519,19 @@ public class PSensor extends Activity {
         }
     }
 
-    private int getBLEConnectionState(){
+    //deprecated for now.
+    private boolean getBLEConnectionState(){
         if(_bluetoothLEService != null) {
-            return _bluetoothLEService.getmConnectionState();
+            return _bluetoothLEService.getRSSI();
         }
-        return 0;
+        return false;
+    }
+
+    private boolean isBLEConnected(){
+        if(_bluetoothLEService != null) {
+            return _bluetoothLEService.getRSSI();
+        }
+        return false;
     }
 }
 

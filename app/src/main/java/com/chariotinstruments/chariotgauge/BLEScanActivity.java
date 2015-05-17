@@ -166,7 +166,7 @@ public class BLEScanActivity extends ListActivity {
 
         //from control
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
-        if (mBluetoothLeService != null) {
+        if (mBluetoothLeService != null && mDeviceAddress != null) {
             final boolean result = mBluetoothLeService.connect(mDeviceAddress, this);
             Log.d(TAG, "Connect request result=" + result);
         }else{
@@ -321,8 +321,7 @@ public class BLEScanActivity extends ListActivity {
     /*end scan methods*/
 
 
-    //TODO: Start of control
-    /* connecting and discovering services/characteristics */
+    /* Start of Control */
 
 
     // Handles various events fired by the Service.
@@ -349,7 +348,6 @@ public class BLEScanActivity extends ListActivity {
                 //displayGattServices(mBluetoothLeService.getSupportedGattServices());
                 connectService();
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                //TODO: this is where the data gets pushed to the handler
                 //displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
                 //tempViewHolder.deviceName.setText(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
                 //Log.d("THISWORKS", intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
@@ -387,7 +385,6 @@ public class BLEScanActivity extends ListActivity {
                 connectCharacteristic(gattService.getCharacteristic(mBluetoothLeService.UUID_CHARACTERISTIC_CHARIOT_GAUGE));
             }
         }
-        //Log.d(TAG, "Could not find service - connectService()");
     }
 
     public void connectCharacteristic(BluetoothGattCharacteristic characteristic){
