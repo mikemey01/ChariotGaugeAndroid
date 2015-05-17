@@ -2,6 +2,7 @@ package com.chariotinstruments.chariotgauge;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,6 +11,7 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -62,6 +64,7 @@ public class BLEScanActivity extends ListActivity {
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
     private boolean mConnected = false;
     private BluetoothGattCharacteristic mNotifyCharacteristic;
+    private int _attemptsCount;
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
@@ -114,6 +117,8 @@ public class BLEScanActivity extends ListActivity {
         }
 
         mBluetoothLeService = new BluetoothLeService(this, _bleHandler);
+
+        _attemptsCount = 0;
     }
 
     @Override
@@ -220,16 +225,46 @@ public class BLEScanActivity extends ListActivity {
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
                     invalidateOptionsMenu();
+                    _attemptsCount++;
+                    Log.i(TAG, String.valueOf(_attemptsCount));
+                    checkAttempsCount();
                 }
             }, SCAN_PERIOD);
 
             mScanning = true;
             mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
+            _attemptsCount = 0;
             mScanning = false;
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
         }
         invalidateOptionsMenu();
+    }
+
+    private void checkAttempsCount(){
+        if(mLeDeviceListAdapter.getCount() < 5 && _attemptsCount > 1){
+            //TODO put the notice dialog here.
+            new AlertDialog.Builder(this)
+                    .setTitle("Try Bluetooth Classic?")
+                    .setMessage("Scanning using Bluetooth LE has not found any Chariot Gauge controllers. Try scanning using Bluetooth classic. Turn it on in Settings -> General Settings")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+//                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // do nothing
+//                        }
+//                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+            //Set this back to zero
+            _attemptsCount = 0;
+        }
+        if(_attemptsCount > 2)
+            _attemptsCount = 0;
     }
 
     // Adapter for holding devices found through scanning.

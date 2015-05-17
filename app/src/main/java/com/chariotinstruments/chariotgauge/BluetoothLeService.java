@@ -310,6 +310,10 @@ public class BluetoothLeService {
     }
 
     public boolean getRSSI(){
-        return mBluetoothGatt.readRemoteRssi();
+        if(mBluetoothGatt != null) {
+            return mBluetoothGatt.readRemoteRssi();
+        }else{
+            return false;
+        }
     }
 }

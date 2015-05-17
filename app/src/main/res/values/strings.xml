@@ -37,12 +37,12 @@
 
     <!-- DeviceListActivity -->
     <string name="scanning">Scanning for devices...</string>
-    <string name="select_device">Select a device to connect</string>
-    <string name="none_paired">No devices have been paired</string>
-    <string name="none_found">No devices found</string>
-    <string name="title_paired_devices">Paired Devices</string>
+    <string name="select_device">Bluetooth Classic Chariot Gauge Scan</string>
+    <string name="none_paired">No controllers have been paired</string>
+    <string name="none_found">No controllers found</string>
+    <string name="title_paired_devices">Paired controllers</string>
     <string name="title_other_devices">Other Available Devices</string>
-    <string name="button_scan">Scan for devices</string>
+    <string name="button_scan">Scan for Controllers</string>
 
     <!-- Dashboard Strings -->
     <string name="logo_string">Demo</string>
@@ -69,8 +69,8 @@
         Please visit: https://www.chariotgauge.com/ \n\n
 
         May-18-2015: \n
+            -Added Bluetooth LE support. \n
             -Fixed Quad-chart digital values for oil, volts. \n
-            -Added Bluetooth LE support.
         
         Feb-21-2015: \n
         	-Fixed gauge display for lollipop. \n\n
