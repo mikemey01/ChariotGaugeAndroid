@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chariotinstruments.chariotgauge"
-    android:versionCode="19"
-    android:versionName="1.6.1" >
+    android:versionCode="20"
+    android:versionName="1.7" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
     <supports-screens
@@ -108,7 +108,7 @@
             android:name=".BLEScanActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light"/>
+            android:theme="@style/ActionBarTheme"/>
     </application>
 
 </manifest>

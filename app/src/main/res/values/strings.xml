@@ -37,7 +37,7 @@
 
     <!-- DeviceListActivity -->
     <string name="scanning">Scanning for devices...</string>
-    <string name="select_device">Bluetooth Classic Chariot Gauge Scan</string>
+    <string name="select_device">Bluetooth Classic Scan</string>
     <string name="none_paired">No controllers have been paired</string>
     <string name="none_found">No controllers found</string>
     <string name="title_paired_devices">Paired controllers</string>

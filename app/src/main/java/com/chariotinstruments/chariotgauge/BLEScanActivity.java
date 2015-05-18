@@ -15,10 +15,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,6 +71,7 @@ public class BLEScanActivity extends ListActivity {
     private boolean mConnected = false;
     private BluetoothGattCharacteristic mNotifyCharacteristic;
     private int _attemptsCount;
+    private Typeface roboto;
 
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
@@ -93,8 +100,20 @@ public class BLEScanActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Bold.ttf");
+
         getActionBar().setTitle(R.string.title_devices);
-        getActionBar().setDisplayHomeAsUpEnabled(false);
+
+        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        int subtitleId = getResources().getIdentifier("action_bar_subtitle", "id", "android");
+        TextView actionBarTitle = (TextView) findViewById(titleId);
+        TextView actionBarSubTitle = (TextView) findViewById(subtitleId);
+        actionBarTitle.setTextColor(getResources().getColor(R.color.white));
+        actionBarTitle.setTypeface(roboto);
+        actionBarSubTitle.setTextColor(getResources().getColor(R.color.white));
+        actionBarSubTitle.setTypeface(roboto);
+
         mHandler = new Handler();
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
@@ -116,14 +135,17 @@ public class BLEScanActivity extends ListActivity {
             return;
         }
 
+        //Instantiate a new BLE service to pass around
         mBluetoothLeService = new BluetoothLeService(this, _bleHandler);
 
+        //Start counting attempts to find a controller.
         _attemptsCount = 0;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
         if (!mScanning) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(true);
@@ -242,21 +264,18 @@ public class BLEScanActivity extends ListActivity {
     }
 
     private void checkAttempsCount(){
-        if(mLeDeviceListAdapter.getCount() < 5 && _attemptsCount > 1){
-            //TODO put the notice dialog here.
+        if(mLeDeviceListAdapter.getCount() < 1 && _attemptsCount > 1){
+
+            //Show this dialog if no controllers found after two attempts.
             new AlertDialog.Builder(this)
                     .setTitle("Try Bluetooth Classic?")
-                    .setMessage("Scanning using Bluetooth LE has not found any Chariot Gauge controllers. Try scanning using Bluetooth classic. Turn it on in Settings -> General Settings")
+                    .setMessage("Scanning using Bluetooth LE has not found any Chariot Gauge controllers. Try scanning using Bluetooth Classic if problem persists." +
+                            "\n\nTurn Classic on in Settings -> General Settings")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
+                            // do nothing for now.
                         }
                     })
-//                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            // do nothing
-//                        }
-//                    })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
 

@@ -5,7 +5,7 @@
 
     <PreferenceScreen
         android:key="general_preferencescreen"
-        android:title="General settings" >
+        android:title="General Settings" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="showAnalog"

@@ -27,5 +27,6 @@
     <color name="title_separator">#40ffffff</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="actionbar">#D23D5F82</color>
 
 </resources>

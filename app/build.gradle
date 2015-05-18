@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.chariotinstruments.chariotgauge"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 19
     }
 
