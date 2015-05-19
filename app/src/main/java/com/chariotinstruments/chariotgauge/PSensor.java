@@ -271,6 +271,7 @@ public class PSensor extends Activity {
 
     public void onResume(){
         super.onResume();
+        turnOnBluetooth();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         isBLE = !sp.getBoolean("isBluetoothClassic", false);
         if(!debug){
@@ -530,6 +531,17 @@ public class PSensor extends Activity {
             return _bluetoothLEService.getRSSI();
         }
         return false;
+    }
+
+    private void turnOnBluetooth(){
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(getApplicationContext(), "This device does not support Bluetooth", Toast.LENGTH_SHORT).show();
+        }
+
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
     }
 }
 
