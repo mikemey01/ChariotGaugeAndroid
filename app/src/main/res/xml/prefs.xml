@@ -7,6 +7,11 @@
         android:key="general_preferencescreen"
         android:title="General Settings" >
         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="isBluetoothClassic"
+            android:summary="Use Classic Bluetooth Scan?"
+            android:title="Use Bluetooth Classic"/>
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="showAnalog"
             android:summary="Turn the analog gauge on and off"
@@ -26,11 +31,6 @@
             android:key="showNightMode"
             android:summary="Toggle night mode"
             android:title="Night Mode" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="isBluetoothClassic"
-            android:summary="Use Classic Bluetooth Scan?"
-            android:title="Use Bluetooth Classic"/>
 
         <ListPreference
             android:defaultValue="Tenths"

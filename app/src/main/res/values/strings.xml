@@ -70,7 +70,8 @@
 
         May-18-2015: \n
             -Added Bluetooth LE support. \n
-            -Fixed Quad-chart digital values for oil, volts. \n
+            -Fixed Error Where app would dismiss on start. \n
+            -Fixed Quad-chart digital values for oil, volts. \n\n
         
         Feb-21-2015: \n
         	-Fixed gauge display for lollipop. \n\n

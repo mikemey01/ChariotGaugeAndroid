@@ -133,11 +133,9 @@ public class PSensor extends Activity {
 //        btnVolts.setTypeface(typeFaceBtn);
 
         //Bluetooth LE check
-        isBLE = true;
+        isBLE = false;
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "Bluetooth LE Not Supported", Toast.LENGTH_SHORT).show();
             isBLE = false;
-            finish();
         } else { //Bluetooth is supprted, check if it's turned on in settings.
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             isBLE = !sp.getBoolean("isBluetoothClassic", false);
