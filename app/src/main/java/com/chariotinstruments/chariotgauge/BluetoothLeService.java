@@ -143,8 +143,7 @@ public class BluetoothLeService {
         byte[] buffer = new byte[1024];
 
         final byte[] data = characteristic.getValue();
-        if (data != null && data.length > 5) {
-
+        if (data != null && data.length > 10) {
             //Get the length of the new byte array.
             for(byte byteChar : data) {
                 if(byteChar != delimiter2) {

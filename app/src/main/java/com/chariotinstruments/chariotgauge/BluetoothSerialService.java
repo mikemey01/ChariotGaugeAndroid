@@ -377,7 +377,10 @@ public class BluetoothSerialService {
                             mHandler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, buffer).sendToTarget();
 
                         }else{
-                            buffer[readBufferPosition++] = b;
+                            //Getting a few index out of bounds errors here, adding handling.
+                            if(readBufferPosition<1023) {
+                                buffer[readBufferPosition++] = b;
+                            }
                         }
                     }
                 }

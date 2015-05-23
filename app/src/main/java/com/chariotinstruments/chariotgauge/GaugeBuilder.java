@@ -641,8 +641,10 @@ public final class GaugeBuilder extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        //Log.d(TAG, "Size changed to " + w + "x" + h);
-        regenerateBackground();
+        //Adding check to make sure width and height are > 0.
+        if(w>0 && h>0) {
+            regenerateBackground();
+        }
     }
 
     public void regenerateBackground() {
