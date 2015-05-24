@@ -69,9 +69,9 @@
         Please visit: https://www.chariotgauge.com/ \n\n
 
         May-24-2015: \n
-            -Fixed BLE jumpiness
-            -Fixed index out of bounds error in classic BT.
-            -Fixed illegal argument in gauge background.
+            -Fixed BLE jumpiness \n
+            -Fixed index out of bounds error in classic BT.\n
+            -Fixed illegal argument in gauge background.\n\n
 
         May-18-2015: \n
             -Added Bluetooth LE support. \n
