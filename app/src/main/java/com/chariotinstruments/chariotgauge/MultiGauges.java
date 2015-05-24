@@ -244,6 +244,7 @@ public class MultiGauges extends View{
                 }
             }
         }else{ //Fahrenheit
+
             if(getF(temp) < minValue){
                 currentGaugeValue = (float)minValue;
             }else if(getF(temp) > maxValue){
@@ -803,7 +804,7 @@ public class MultiGauges extends View{
         return ret;
     }
 
-    private double getF(double c){
+    protected double getF(double c){
         return (c*1.8)+32;
     }
 

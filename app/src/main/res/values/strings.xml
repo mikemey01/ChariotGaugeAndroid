@@ -68,7 +68,7 @@
     <string name="whats_new">        The Chariot Gauge controller is now for sale! \n\n
         Please visit: https://www.chariotgauge.com/ \n\n
 
-        May-23-2015: \n
+        May-24-2015: \n
             -Fixed BLE jumpiness
             -Fixed index out of bounds error in classic BT.
             -Fixed illegal argument in gauge background.
