@@ -27,20 +27,15 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 import android.os.Handler;
-import android.widget.Toast;
 
-import java.io.Console;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,6 +50,9 @@ public class BluetoothLeService {
     private int mConnectionState = STATE_DISCONNECTED;
     private Handler _handler;
     private Context _context;
+    private StringBuilder concatData;
+    private int readBufferPosition;
+    private byte[] byteBuffer;
 
     public static final int STATE_DISCONNECTED = 0;
     public static final int STATE_CONNECTING = 1;
@@ -64,7 +62,6 @@ public class BluetoothLeService {
     public final static String ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
     public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
     public final static String ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
-    public final static String EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA";
 
     public final static UUID UUID_CHARIOT_GAUGE = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
     public final static UUID UUID_CHARACTERISTIC_CHARIOT_GAUGE = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb");
@@ -77,6 +74,10 @@ public class BluetoothLeService {
         if(!initialize(context)){
             Log.d(TAG, "Broken in the constructor");
         }
+
+        //Setup data vars
+        readBufferPosition = 0;
+        byteBuffer = new byte[1024];
     }
 
     public BluetoothLeService(){
@@ -137,27 +138,28 @@ public class BluetoothLeService {
     }
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-        final byte delimiter = 13; //new line character
-        final byte delimiter2 = 10; //carriage return char.
-        int readBufferPosition = 0;
-        byte[] buffer = new byte[1024];
+        final byte delimiter = 10; //new line character
 
         final byte[] data = characteristic.getValue();
-        if (data != null && data.length > 10) {
-            //Get the length of the new byte array.
-            for(byte byteChar : data) {
-                if(byteChar != delimiter2 && byteChar != delimiter) {
-                    buffer[readBufferPosition] = byteChar;
+        if (data != null && data.length > 0) {
+
+            //Iterate through the data.
+            for(int i=0; i<data.length; i++) {
+
+                //if the delimiter has been found, pass the calling thread
+                if(data[i]==delimiter){
+                    _handler.obtainMessage(PSensor.MESSAGE_READ, readBufferPosition, -1, byteBuffer).sendToTarget();
+
+                    //Reset global vars.
+                    byteBuffer = new byte[1024];
+                    readBufferPosition = 0;
+
+                //If this byte is not the delimiter, add it to the byteBuffer array/increment to next array position.
+                }else {
+                    byteBuffer[readBufferPosition] = data[i];
                     readBufferPosition++;
                 }
             }
-
-            //Pass the data up to the calling activity
-            _handler.obtainMessage(PSensor.MESSAGE_READ, readBufferPosition, -1, buffer).sendToTarget();
-
-//            //temp
-//            String readMessage = new String(buffer, 0, readBufferPosition);
-//            Log.i("FROM BLE", readMessage);
         }
     }
 

@@ -376,6 +376,10 @@ public class BluetoothSerialService {
                             readBufferPosition = 0;
                             mHandler.obtainMessage(PSensor.MESSAGE_READ, encodedBytes.length, -1, buffer).sendToTarget();
 
+                            //temp
+                            String readMessage = new String(buffer, 0, encodedBytes.length);
+                            Log.i("FROM BT Classic", readMessage);
+
                         }else{
                             //Getting a few index out of bounds errors here, adding handling.
                             if(readBufferPosition<1023) {
