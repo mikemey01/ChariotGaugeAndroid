@@ -197,7 +197,7 @@ public class BLEScanActivity extends ListActivity {
             final boolean result = mBluetoothLeService.connect(mDeviceAddress, this);
             Log.d(TAG, "Connect request result=" + result);
         }else{
-            Log.d(TAG, "prolem in onResume");
+            Log.d(TAG, "problem in onResume");
         }
     }
 
