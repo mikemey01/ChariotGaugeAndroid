@@ -133,6 +133,9 @@ public class MultiGauges extends View{
         case 4: 
             handleOilSensor(sValue);
             break;
+        case 5:
+            handleRpmSensor(sValue);
+            break;
         default:
             currentGaugeValue = 1;
             break;
@@ -290,6 +293,11 @@ public class MultiGauges extends View{
                 sensorMaxValue = oil;
             }
         }
+    }
+
+    public void handleRpmSensor(float sVAlue){
+
+
     }
 
     public void handleVoltMeter(float sValue){
@@ -533,19 +541,20 @@ public class MultiGauges extends View{
             rpmSensorInit();
             
             minValue = 0;
-            maxValue = 9000;
-            sensorMinValue = 0;
+            maxValue = 10;
+            sensorMinValue = minValue;
             sensorMaxValue = minValue;
 
-            analogGauge.setTotalNotches(10);
-            analogGauge.setIncrementPerLargeNotch(1000);
-            analogGauge.setIncrementPerSmallNotch(200);
-            analogGauge.setScaleCenterValue(5000);
+            analogGauge.setTotalNotches(20);
+            analogGauge.setIncrementPerLargeNotch(1);
+            analogGauge.setIncrementPerSmallNotch(1);
+            analogGauge.setScaleCenterValue(((maxValue - minValue) / 2));
             analogGauge.setScaleMinValue(minValue);
             analogGauge.setScaleMaxValue(maxValue);
-            analogGauge.setUnitTitle("RPM");
-            analogGauge.setValue(minValue);
-            break;
+            analogGauge.setUnitTitle("x1000 RPM");
+            analogGauge.setValue((float)minValue);
+            analogGauge.setAbsoluteNumbers(true);
+
         default:
             break;
         }
