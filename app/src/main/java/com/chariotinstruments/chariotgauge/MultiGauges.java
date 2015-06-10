@@ -80,7 +80,7 @@ public class MultiGauges extends View{
     
     //RPM gauge parameters
     double rpmNumberCylinders;
-    double rpmMaxValue;
+    int rpmMaxValue;
 
     public MultiGauges(Context context){
         super(context);
@@ -295,9 +295,8 @@ public class MultiGauges extends View{
         }
     }
 
-    public void handleRpmSensor(float sVAlue){
-
-
+    public void handleRpmSensor(float sValue){
+        currentGaugeValue = ( sValue / 1000 );
     }
 
     public void handleVoltMeter(float sValue){
@@ -335,7 +334,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(8);
                 analogGauge.setIncrementPerLargeNotch(1);
                 analogGauge.setIncrementPerSmallNotch(1);
-                analogGauge.setScaleCenterValue(1);
+                analogGauge.setScaleCenterValue(1, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Boost/Vac (BAR)");
@@ -352,7 +351,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(65);
                 analogGauge.setIncrementPerLargeNotch(25);
                 analogGauge.setIncrementPerSmallNotch(5);
-                analogGauge.setScaleCenterValue(150);
+                analogGauge.setScaleCenterValue(150, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Boost/Vac (KPA)");
@@ -368,7 +367,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(65);
                 analogGauge.setIncrementPerLargeNotch(5);
                 analogGauge.setIncrementPerSmallNotch(1);
-                analogGauge.setScaleCenterValue(0);
+                analogGauge.setScaleCenterValue(0, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Boost/Vac (PSI/inHG)");
@@ -392,7 +391,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(7);
                 analogGauge.setIncrementPerLargeNotch(1);
                 analogGauge.setIncrementPerSmallNotch(1);
-                analogGauge.setScaleCenterValue(1);
+                analogGauge.setScaleCenterValue(1, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle(fuelType + " Wideband Lambda");
@@ -408,7 +407,7 @@ public class MultiGauges extends View{
                     analogGauge.setTotalNotches(40);
                     analogGauge.setIncrementPerLargeNotch(5);
                     analogGauge.setIncrementPerSmallNotch(1);
-                    analogGauge.setScaleCenterValue(15);
+                    analogGauge.setScaleCenterValue(15, true);
                     analogGauge.setScaleMinValue(minValue);
                     analogGauge.setScaleMaxValue(maxValue);
                     analogGauge.setUnitTitle(fuelType + " Wideband AFR");
@@ -423,7 +422,7 @@ public class MultiGauges extends View{
                     analogGauge.setTotalNotches(10);
                     analogGauge.setIncrementPerLargeNotch(1);
                     analogGauge.setIncrementPerSmallNotch(1);
-                    analogGauge.setScaleCenterValue(5);
+                    analogGauge.setScaleCenterValue(5, true);
                     analogGauge.setScaleMinValue(minValue);
                     analogGauge.setScaleMaxValue(maxValue);
                     analogGauge.setUnitTitle(fuelType + " Wideband AFR");
@@ -438,7 +437,7 @@ public class MultiGauges extends View{
                     analogGauge.setTotalNotches(10);
                     analogGauge.setIncrementPerLargeNotch(1);
                     analogGauge.setIncrementPerSmallNotch(1);
-                    analogGauge.setScaleCenterValue(8);
+                    analogGauge.setScaleCenterValue(8, true);
                     analogGauge.setScaleMinValue(minValue);
                     analogGauge.setScaleMaxValue(maxValue);
                     analogGauge.setUnitTitle(fuelType + " Wideband AFR");
@@ -453,7 +452,7 @@ public class MultiGauges extends View{
                     analogGauge.setTotalNotches(40);
                     analogGauge.setIncrementPerLargeNotch(5);
                     analogGauge.setIncrementPerSmallNotch(1);
-                    analogGauge.setScaleCenterValue(15);
+                    analogGauge.setScaleCenterValue(15, true);
                     analogGauge.setScaleMinValue(minValue);
                     analogGauge.setScaleMaxValue(maxValue);
                     analogGauge.setUnitTitle("Wideband AFR");
@@ -476,7 +475,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(60);
                 analogGauge.setIncrementPerLargeNotch(20);
                 analogGauge.setIncrementPerSmallNotch(4);
-                analogGauge.setScaleCenterValue(65);
+                analogGauge.setScaleCenterValue(65, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Temperature (C)");
@@ -492,7 +491,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(45);
                 analogGauge.setIncrementPerLargeNotch(40);
                 analogGauge.setIncrementPerSmallNotch(8);
-                analogGauge.setScaleCenterValue(140);
+                analogGauge.setScaleCenterValue(140, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Temperature (F)");
@@ -514,7 +513,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(12);
                 analogGauge.setIncrementPerLargeNotch(1);
                 analogGauge.setIncrementPerSmallNotch(1);
-                analogGauge.setScaleCenterValue(5);
+                analogGauge.setScaleCenterValue(5, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Oil Pressure(BAR)");
@@ -528,7 +527,7 @@ public class MultiGauges extends View{
                 analogGauge.setTotalNotches(80);
                 analogGauge.setIncrementPerLargeNotch(10);
                 analogGauge.setIncrementPerSmallNotch(2);
-                analogGauge.setScaleCenterValue(50);
+                analogGauge.setScaleCenterValue(50, true);
                 analogGauge.setScaleMinValue(minValue);
                 analogGauge.setScaleMaxValue(maxValue);
                 analogGauge.setUnitTitle("Oil Pressure(PSI)");
@@ -541,14 +540,14 @@ public class MultiGauges extends View{
             rpmSensorInit();
             
             minValue = 0;
-            maxValue = 10;
+            maxValue = rpmMaxValue;
             sensorMinValue = minValue;
             sensorMaxValue = minValue;
 
-            analogGauge.setTotalNotches(20);
+            analogGauge.setTotalNotches(rpmMaxValue + (rpmMaxValue / 2));
             analogGauge.setIncrementPerLargeNotch(1);
             analogGauge.setIncrementPerSmallNotch(1);
-            analogGauge.setScaleCenterValue(((maxValue - minValue) / 2));
+            analogGauge.setScaleCenterValue(((maxValue - minValue) / 2), false);
             analogGauge.setScaleMinValue(minValue);
             analogGauge.setScaleMaxValue(maxValue);
             analogGauge.setUnitTitle("x1000 RPM");
@@ -740,14 +739,18 @@ public class MultiGauges extends View{
         SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(context);
         
         String sRPMNumberCylinders = sp.getString("rpmNumberCylinders", "4");
-        String sRPMMaxValue        = sp.getString("rpmMaxValue", "9000");
+        String sRPMMaxValue        = sp.getString("rpmMaxValue", "10");
         
         try{
             rpmNumberCylinders = Float.parseFloat(sRPMNumberCylinders);
-            rpmMaxValue = Float.parseFloat(sRPMMaxValue);
+            rpmMaxValue = Integer.parseInt(sRPMMaxValue);
+            if ( rpmMaxValue > 1000 ){
+                // The user input an RPM max value greater than 1000, divide by 1000 and round up
+                rpmMaxValue = (int)(((float)rpmMaxValue / 1000) + 1);
+            }
         } catch(NumberFormatException e){
             rpmNumberCylinders = 4.0d;
-            rpmMaxValue = 9000.0d;
+            rpmMaxValue = 10;
         }
     }
     

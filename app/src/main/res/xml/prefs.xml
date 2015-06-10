@@ -56,7 +56,7 @@
             android:key="rpmMaxValue"
             android:persistent="true"
             android:summary="Set the max RPM value for the gauge view"
-            android:title="RPM Max Value" />
+            android:title="RPM Max Value (x1000)" />
     </PreferenceScreen>
     <PreferenceScreen
         android:key="boost_preferencescreen"

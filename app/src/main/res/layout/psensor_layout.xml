@@ -75,8 +75,7 @@
                 android:drawableTop="@drawable/boost_logo"
                 android:onClick="onClickActivity"
                 android:text="@string/rpm_title"
-                android:enabled="false"
-                android:visibility="visible" />
+                android:enabled="true" />
         </LinearLayout>
 
         <LinearLayout
