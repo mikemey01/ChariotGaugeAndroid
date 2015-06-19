@@ -736,8 +736,8 @@ public class MultiGauges extends View{
     
     /*RPM prefs*/
     private void prefsRPMInit(){
-        SharedPreferences sp=PreferenceManager.getDefaultSharedPreferences(context);
-        
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
         String sRPMNumberCylinders = sp.getString("rpmNumberCylinders", "4");
         String sRPMMaxValue        = sp.getString("rpmMaxValue", "10");
         

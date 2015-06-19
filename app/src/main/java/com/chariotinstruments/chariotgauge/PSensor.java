@@ -32,7 +32,8 @@ public class PSensor extends Activity {
     private static final int REQUEST_ENABLE_BT      = 2;
 
     // Flags
-    private final boolean ENABLE_RPM_BUTTON = false;
+    public static final boolean ENABLE_RPM              = false;
+    public static final boolean ENABLE_TRACE_BLUE_TOOTH = false;
 
     // Debugging
     private static final String TAG = "ProjectSensor";
