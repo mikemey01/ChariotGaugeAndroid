@@ -537,7 +537,6 @@ public class MultiGauges extends View{
         case 5: //RPM
             currentToken = 5;
             prefsRPMInit();
-            rpmSensorInit();
             
             minValue = 0;
             maxValue = rpmMaxValue;
@@ -596,6 +595,10 @@ public class MultiGauges extends View{
             prefsOilInit();
             oilSensorInit();
             break;
+            case 5:
+                currentToken = 5;
+                prefsRPMInit();
+
         default:
             break;
         }
@@ -827,6 +830,7 @@ public class MultiGauges extends View{
         oilRangeVolts = oilHighVolts - oilLowVolts;
         oilRangePSI = oilHighPSI - oilLowPSI;
     }
+
     /* volt meter Helper Functions */
     private double getVoltMeter(float ADC){
         double ret = 0;
@@ -834,11 +838,5 @@ public class MultiGauges extends View{
         ret = .029326*ADC; //scale input adc to voltage using 10k/2k voltage divider.
 
         return ret;
-    }
-    
-    /*RPM Helper functions */
-    
-    private void rpmSensorInit(){
-        
     }
 }

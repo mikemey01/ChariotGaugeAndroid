@@ -105,7 +105,7 @@ public class PSensor extends Activity {
         btnMulti1 = (Button) findViewById(R.id.multiBtn1);
         btnMulti2 = (Button) findViewById(R.id.multiBtn2);
         btnRPM = (Button) findViewById(R.id.rpmBtn);
-        if ( !ENABLE_RPM_BUTTON ) {
+        if ( !ENABLE_RPM ) {
             btnRPM.setVisibility(View.GONE);
         }
         //btnSpeed = (Button) findViewById(R.id.speedBtn);

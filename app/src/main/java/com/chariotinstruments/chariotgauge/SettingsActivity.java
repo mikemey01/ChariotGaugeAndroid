@@ -25,7 +25,7 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
         CGPreferenceScreen = getPreferenceScreen();
-        
+
         // Setup the click listener for the "Buy Hardware Controller" preference
         getPreferenceManager()
         .findPreference("go_to_site")
