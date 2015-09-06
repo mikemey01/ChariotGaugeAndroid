@@ -318,6 +318,11 @@ public class SingleChartActivity extends Activity implements Runnable {
             subTitleLabel1.setText("Oil Pressure:");
             chartType = "Oil: ";
             break;
+        case 5:
+            dataSetOne = buildNewTimeSeries(dataSetOne, "RPM");
+            subTitleLabel1.setText("RPM:");
+            chartType = "RPM: ";
+            break;
         default:
             dataSetOne = buildNewTimeSeries(dataSetOne, "Boost");
             //line.setYLabel("Pressure (inHG/PSI)");

@@ -69,12 +69,13 @@
                 android:onClick="onClickActivity"
                 android:text="@string/boost_title" />
             
-            <!--<Button
+            <Button
                 android:id="@+id/rpmBtn"
                 style="@style/DashboardButton"
                 android:drawableTop="@drawable/boost_logo"
                 android:onClick="onClickActivity"
-                android:text="@string/rpm_title" />-->
+                android:text="@string/rpm_title"
+                android:enabled="true" />
         </LinearLayout>
 
         <LinearLayout

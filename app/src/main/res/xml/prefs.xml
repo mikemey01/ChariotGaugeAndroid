@@ -51,12 +51,12 @@
             android:summary="Select your engine's number of cylinders"
             android:title="Number of cylinders"/>
         <EditTextPreference
-            android:defaultValue="9000"
+            android:defaultValue="10"
             android:inputType="numberDecimal"
             android:key="rpmMaxValue"
             android:persistent="true"
             android:summary="Set the max RPM value for the gauge view"
-            android:title="RPM Max Value" />
+            android:title="RPM Max Value (x1000)" />
     </PreferenceScreen>
     <PreferenceScreen
         android:key="boost_preferencescreen"

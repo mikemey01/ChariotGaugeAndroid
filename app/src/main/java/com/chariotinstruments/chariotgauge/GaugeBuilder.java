@@ -108,6 +108,7 @@ public final class GaugeBuilder extends View {
     private int backgroundColor              = Color .rgb(220, 220, 220);
     private int redColor                     = Color .rgb(225, 18, 18);
     private int scaleCenterValue             = 15; // the one in the top center (12 o'clock), this corresponds with -90 degrees
+    private Paint scaleCenterColor           = redPaint;
     private int scaleMinValue                = 0;
     private int scaleMaxValue                = 100;
     private float degreeMinValue             = 0;
@@ -168,8 +169,14 @@ public final class GaugeBuilder extends View {
         this.incrementPerSmallNotch = in;
     }
 
-    public void setScaleCenterValue(int in){
+    public void setScaleCenterValue(int in, boolean highlight){
         this.scaleCenterValue = in;
+        if ( highlight ){
+            this.scaleCenterColor = redPaint;
+        }
+        else{
+            this.scaleCenterColor = scalePaint;
+        }
     }
 
     public void setScaleMinValue(int in){
@@ -521,7 +528,7 @@ public final class GaugeBuilder extends View {
                     if(value == scaleCenterValue){
                         //canvas.drawText(valueString, 0.5f, y3 - 0.015f, redPaint);//scalePaint);
                         //This handles the 5.01 bug of not drawing text correctly on the scale.
-                        drawTextOnCanvasWithMagnifier(canvas, valueString, 0.5f, y3 - 0.015f, redPaint);
+                        drawTextOnCanvasWithMagnifier(canvas, valueString, 0.5f, y3 - 0.015f, scaleCenterColor);
                     }else{
                         //canvas.drawText(valueString, 0.5f, y3 - 0.015f, scalePaint);
                         //This handles the 5.01 bug of not drawing text correctly on the scale.

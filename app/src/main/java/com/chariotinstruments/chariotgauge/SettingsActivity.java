@@ -16,15 +16,14 @@ public class SettingsActivity extends PreferenceActivity {
 
     View root;
     PreferenceScreen CGPreferenceScreen;
-    Preference TraceBlueToothPreference;
-
-    private final boolean ENABLE_TRACE_BLUE_TOOTH = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Preference RpmPreference;
+        Preference TraceBlueToothPreference;
+
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
-
         CGPreferenceScreen = getPreferenceScreen();
 
         // Setup the click listener for the "Buy Hardware Controller" preference
@@ -40,12 +39,21 @@ public class SettingsActivity extends PreferenceActivity {
                     }
                 });
 
-        // Blue tooth trace preference. Setup the listener if ENABLE_TRACE_BLUE_TOOTH, else remove
-        // it from the preference screen.
+        // Get handles to various preferences
         TraceBlueToothPreference = getPreferenceManager().
                 findPreference("blue_tooth_trace_selection");
 
-        if ( ENABLE_TRACE_BLUE_TOOTH ){
+        // Remove the RPM preference if the RPM flag is disabled
+        if ( !PSensor.ENABLE_RPM ){
+            RpmPreference = getPreferenceManager().
+                    findPreference("rpm_preferencescreen");
+            CGPreferenceScreen.removePreference(RpmPreference);
+        }
+
+
+        // Blue tooth trace preference. Setup the listener if ENABLE_TRACE_BLUE_TOOTH, else remove
+        // it from the preference screen.
+        if ( PSensor.ENABLE_TRACE_BLUE_TOOTH ){
             TraceBlueToothPreference
                     .setOnPreferenceClickListener(
                             new OnPreferenceClickListener() {

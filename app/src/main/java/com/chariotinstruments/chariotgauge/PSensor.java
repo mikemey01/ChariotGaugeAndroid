@@ -27,13 +27,18 @@ import android.widget.Toast;
 public class PSensor extends Activity {
     /** Called when the activity is first created. */
 
-    //Constants..
+    // Constants
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT      = 2;
+
+    // Flags
+    public static final boolean ENABLE_RPM              = false;
+    public static final boolean ENABLE_TRACE_BLUE_TOOTH = false;
 
     // Debugging
     private static final String TAG = "ProjectSensor";
     private static final boolean D  = true;
+    private boolean debug;
 
     // Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -47,8 +52,6 @@ public class PSensor extends Activity {
     public static final int BLE_MESSAGE_CONNECTING   = 1;
     public static final int BLE_MESSAGE_CONNECTED    = 2;
 
-
-
     //Used to show whats new dialog.
     private static final String PRIVATE_PREF = "myapp";
     private static final String VERSION_KEY  = "version_number";
@@ -56,9 +59,6 @@ public class PSensor extends Activity {
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST       = "toast";
-
-    //DEBUG
-    private boolean debug;
 
     //Global Variables.
     TextView  titleText;
@@ -104,7 +104,10 @@ public class PSensor extends Activity {
         btnCustom = (Button) findViewById(R.id.customBtn);
         btnMulti1 = (Button) findViewById(R.id.multiBtn1);
         btnMulti2 = (Button) findViewById(R.id.multiBtn2);
-        //btnRPM = (Button) findViewById(R.id.rpmBtn);
+        btnRPM = (Button) findViewById(R.id.rpmBtn);
+        if ( !ENABLE_RPM ) {
+            btnRPM.setVisibility(View.GONE);
+        }
         //btnSpeed = (Button) findViewById(R.id.speedBtn);
         //btnVolts = (Button) findViewById(R.id.voltBtn);
 
@@ -128,7 +131,7 @@ public class PSensor extends Activity {
         btnCustom.setTypeface(typeFaceBtn);
         btnMulti1.setTypeface(typeFaceBtn);
         btnMulti2.setTypeface(typeFaceBtn);
-//        btnRPM.setTypeface(typeFaceBtn);
+        btnRPM.setTypeface(typeFaceBtn);
 //        btnSpeed.setTypeface(typeFaceBtn);
 //        btnVolts.setTypeface(typeFaceBtn);
 
@@ -212,10 +215,10 @@ public class PSensor extends Activity {
                 passBluetooth();
                 startActivity(new Intent(getApplicationContext(), BoostActivity.class));
                 break;
-//            case R.id.rpmBtn:
-//                passBluetooth();
-//                startActivity(new Intent(getApplicationContext(), RPMActivity.class));
-//                break;
+            case R.id.rpmBtn:
+                passBluetooth();
+                startActivity(new Intent(getApplicationContext(), RPMActivity.class));
+                break;
 //            case R.id.speedBtn:
 //                passBluetooth();
 //                startActivity(new Intent(getApplicationContext(), SpeedActivity.class));

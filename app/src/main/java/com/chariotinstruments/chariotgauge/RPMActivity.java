@@ -213,7 +213,7 @@ public class RPMActivity extends Activity implements Runnable {
     public void updateGauges(){
         if(!paused){
             analogGauge.setValue(multiGauge.getCurrentGaugeValue());
-            txtViewDigital.setText(Float.toString(Math.abs(multiGauge.getCurrentGaugeValue())));
+            txtViewDigital.setText(Integer.toString(((int)(multiGauge.getCurrentGaugeValue() * 1000))));
             txtViewVolts.setText(Float.toString(Math.abs(multiGaugeVolts.getCurrentGaugeValue())));
         }
     }
