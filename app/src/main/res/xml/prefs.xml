@@ -7,7 +7,7 @@
         android:key="general_preferencescreen"
         android:title="General Settings" >
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="isBluetoothClassic"
             android:summary="Use Classic Bluetooth Scan?"
             android:title="Use Bluetooth Classic"/>
