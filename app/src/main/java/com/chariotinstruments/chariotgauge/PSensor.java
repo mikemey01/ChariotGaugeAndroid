@@ -137,12 +137,12 @@ public class PSensor extends Activity {
 
         //Bluetooth LE check
         isBLE = false;
-        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            isBLE = false;
-        } else { //Bluetooth is supprted, check if it's turned on in settings.
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-            isBLE = !sp.getBoolean("isBluetoothClassic", false);
-        }
+//        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+//            isBLE = false;
+//        } else { //Bluetooth is supprted, check if it's turned on in settings.
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        isBLE = !sp.getBoolean("isBluetoothClassic", false);
+//        }
 
 
         //Check if there is a BluetoothSerialService object being passed back. If true then don't run through initial setup.
